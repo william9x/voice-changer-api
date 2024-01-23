@@ -1,0 +1,9 @@
+app:
+  name: Voice Changer API
+  security:
+    http:
+      publicUrls:
+        - /actuator/health
+        - /actuator/info
+        - /swagger/*
+

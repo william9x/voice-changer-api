@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  redis:
+    container_name: voice-changer-redis
+    image: bitnami/redis:latest
+    restart: always
+    networks:
+      - backend-private
+    ports:
+      - "6379:6379"
+    environment:
+      ALLOW_EMPTY_PASSWORD: no
+      REDIS_PASSWORD: braly@123
+
+networks:
+  backend-private:
+    driver: bridge # default network driver type

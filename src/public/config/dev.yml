@@ -1,0 +1,12 @@
+app:
+  port: 8080
+  logging:
+    development: true
+  swagger.enabled: true
+  minio:
+    Endpoint: https://dev.storage.bralyvn.com
+    PublicEndpoint: https://dev.storage.bralyvn.com
+    AccessKeyID: uCCpbIoWR4ddYi1I94MS
+    SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
+    UseSSL: true
+    BucketName: voice-changer

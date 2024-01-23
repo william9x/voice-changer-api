@@ -1,0 +1,70 @@
+definitions:
+  resources.Inference:
+    properties:
+      source_url:
+        type: string
+      status:
+        type: string
+      target_url:
+        type: string
+      task_id:
+        type: string
+    type: object
+  response.Meta:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  response.Response:
+    properties:
+      data: {}
+      meta:
+        $ref: '#/definitions/response.Meta'
+    type: object
+info:
+  contact: {}
+  title: Voice Changer API Public
+  version: 1.0.0
+paths:
+  /api/v1/infer:
+    post:
+      consumes:
+      - multipart/form-data
+      operationId: create-inference
+      parameters:
+      - description: Source voice
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: Target voice
+        in: formData
+        name: model
+        required: true
+        type: string
+      - description: 'Default: 0'
+        in: formData
+        name: transpose
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resources.Inference'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Change voice of an audio file to target voice
+      tags:
+      - InferenceController
+swagger: "2.0"
