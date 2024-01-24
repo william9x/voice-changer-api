@@ -5,6 +5,7 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-core/usecases"
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib/exception"
+	"github.com/golibs-starter/golib/log"
 	"github.com/golibs-starter/golib/web/response"
 	"strconv"
 )
@@ -62,6 +63,7 @@ func (c *InferenceController) Infer(ctx *gin.Context) {
 
 	srcFile := entities.NewFile(fileHeader.Filename, fileHeader.Size, file)
 	if err := c.changeVoiceUseCase.ChangeVoice(ctx, srcFile, model, tranpose); err != nil {
+		log.Error(err)
 		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
 		return
 	}

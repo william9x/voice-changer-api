@@ -2,6 +2,7 @@ package adapter
 
 import (
 	"context"
+	"fmt"
 	"github.com/Braly-Ltd/voice-changer-api-adapter/properties"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"github.com/golibs-starter/golib/log"
@@ -26,9 +27,9 @@ func (c *MinIOAdapter) PutObject(ctx context.Context, object *entities.File) err
 		UserMetadata: object.MetaData,
 	})
 	if err != nil {
-		return err
+		return fmt.Errorf("upload file error: %v", err)
 	}
 
-	log.Info(info)
+	log.Debugf("uploaded file: bucket %s name %s", info.Bucket, info.Key)
 	return nil
 }

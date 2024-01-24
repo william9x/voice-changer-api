@@ -40,16 +40,25 @@ func (uc *ChangeVoiceUseCaseImpl) ChangeVoice(
 	}
 
 	taskIdStr := taskId.String()
+
 	srcFile.Name = fmt.Sprintf("source/%s%s", taskIdStr, srcFile.Ext)
 	if err := uc.objectStoragePort.PutObject(ctx, srcFile); err != nil {
-		return fmt.Errorf("upload file error: %v", err)
+		return err
 	}
 
 	targetFileName := fmt.Sprintf("target/%s%s", taskIdStr, srcFile.Ext)
-	payload := entities.NewVoiceChangePayload(srcFile.Name, targetFileName, model, transpose)
+	task := entities.NewVoiceChangeTask(
+		srcFile.Name,
+		targetFileName,
+		model,
+		transpose,
+		constants.TaskTypeInfer,
+		constants.QueueTypeDefault,
+	)
 
-	if err := uc.taskQueuePort.Enqueue(ctx, constants.TaskTypeInfer, payload); err != nil {
-		return fmt.Errorf("enqueue task error: %v", err)
+	if err := uc.taskQueuePort.Enqueue(ctx, task); err != nil {
+		return err
 	}
+
 	return nil
 }

@@ -5,29 +5,40 @@ import (
 	"github.com/vmihailenco/msgpack/v5"
 )
 
-type VoiceChangePayload struct {
+type VoiceChangeTask struct {
 	SrcFileName    string
 	TargetFileName string
 	Model          string
 	Transpose      int
 
-	queue constants.QueueType
+	tType  constants.TaskType
+	tQueue constants.QueueType
 }
 
-func NewVoiceChangePayload(srcFileName, targetFileName, model string, transpose int, queue constants.QueueType) *VoiceChangePayload {
-	return &VoiceChangePayload{
+func NewVoiceChangeTask(
+	srcFileName, targetFileName, model string,
+	transpose int,
+	tType constants.TaskType,
+	tQueue constants.QueueType,
+) *VoiceChangeTask {
+	return &VoiceChangeTask{
 		SrcFileName:    srcFileName,
 		TargetFileName: targetFileName,
 		Model:          model,
 		Transpose:      transpose,
-		queue:          queue,
+		tType:          tType,
+		tQueue:         tQueue,
 	}
 }
 
-func (p *VoiceChangePayload) Pack() ([]byte, error) {
+func (p *VoiceChangeTask) Pack() ([]byte, error) {
 	return msgpack.Marshal(p)
 }
 
-func (p *VoiceChangePayload) Queue() (constants.QueueType, error) {
-	return p.queue, nil
+func (p *VoiceChangeTask) Type() constants.TaskType {
+	return p.tType
+}
+
+func (p *VoiceChangeTask) Queue() constants.QueueType {
+	return p.tQueue
 }

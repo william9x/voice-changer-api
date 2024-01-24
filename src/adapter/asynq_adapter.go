@@ -3,7 +3,6 @@ package adapter
 import (
 	"context"
 	"fmt"
-	"github.com/Braly-Ltd/voice-changer-api-core/constants"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"github.com/golibs-starter/golib/log"
 	"github.com/hibiken/asynq"
@@ -20,12 +19,17 @@ func NewAsynqAdapter(client *asynq.Client) *AsynqAdapter {
 }
 
 // Enqueue ...
-func (c *AsynqAdapter) Enqueue(ctx context.Context, taskType constants.TaskType, task entities.Task) error {
+func (c *AsynqAdapter) Enqueue(ctx context.Context, task entities.Task) error {
 	packed, err := task.Pack()
 	if err != nil {
 		return fmt.Errorf("pack payload error: %v", err)
 	}
-	info, err := c.client.EnqueueContext(ctx, asynq.NewTask(string(taskType), packed), asynq.Queue(task.Queue()))
-	log.Infof("Enqueue task: %v", info)
+
+	info, err := c.client.EnqueueContext(ctx, asynq.NewTask(string(task.Type()), packed), asynq.Queue(string(task.Queue())))
+	if err != nil {
+		return fmt.Errorf("enqueue task error: %v", err)
+	}
+
+	log.Infof("enqueue task: id %s type %s queue %s", info.ID, info.Type, info.Queue)
 	return err
 }
