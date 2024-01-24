@@ -25,7 +25,11 @@ func (c *AsynqAdapter) Enqueue(ctx context.Context, task entities.Task) error {
 		return fmt.Errorf("pack payload error: %v", err)
 	}
 
-	info, err := c.client.EnqueueContext(ctx, asynq.NewTask(string(task.Type()), packed), asynq.Queue(string(task.Queue())))
+	taskOpts := []asynq.Option{
+		asynq.TaskID(task.ID()),
+		asynq.Queue(string(task.Queue())),
+	}
+	info, err := c.client.EnqueueContext(ctx, asynq.NewTask(string(task.Type()), packed), taskOpts...)
 	if err != nil {
 		return fmt.Errorf("enqueue task error: %v", err)
 	}

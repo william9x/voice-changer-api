@@ -11,11 +11,13 @@ type VoiceChangeTask struct {
 	Model          string
 	Transpose      int
 
+	tID    string
 	tType  constants.TaskType
 	tQueue constants.QueueType
 }
 
 func NewVoiceChangeTask(
+	tID string,
 	srcFileName, targetFileName, model string,
 	transpose int,
 	tType constants.TaskType,
@@ -26,9 +28,15 @@ func NewVoiceChangeTask(
 		TargetFileName: targetFileName,
 		Model:          model,
 		Transpose:      transpose,
-		tType:          tType,
-		tQueue:         tQueue,
+
+		tID:    tID,
+		tType:  tType,
+		tQueue: tQueue,
 	}
+}
+
+func (p *VoiceChangeTask) ID() string {
+	return p.tID
 }
 
 func (p *VoiceChangeTask) Pack() ([]byte, error) {

@@ -13,6 +13,24 @@ services:
       ALLOW_EMPTY_PASSWORD: no
       REDIS_PASSWORD: braly@123
 
+  asynqmon:
+    container_name: voice-changer-asynqmon
+    image: hibiken/asynqmon:latest
+    restart: always
+    networks:
+      - backend-private
+    ports:
+      - "8081:8080"
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      REDIS_ADDR: redis:6379
+      REDIS_DB: 1
+      REDIS_PASSWORD: braly@123
+      READ_ONLY: false
+
 networks:
   backend-private:
     driver: bridge # default network driver type

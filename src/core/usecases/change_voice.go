@@ -48,6 +48,7 @@ func (uc *ChangeVoiceUseCaseImpl) ChangeVoice(
 
 	targetFileName := fmt.Sprintf("target/%s%s", taskIdStr, srcFile.Ext)
 	task := entities.NewVoiceChangeTask(
+		taskIdStr,
 		srcFile.Name,
 		targetFileName,
 		model,
