@@ -48,7 +48,7 @@ func (c *InferenceController) Infer(ctx *gin.Context) {
 	if exist {
 		t, err := strconv.Atoi(tranposeStr)
 		if err != nil {
-			response.WriteError(ctx.Writer, exception.New(400, "Invalid file"))
+			response.WriteError(ctx.Writer, exception.New(400, "Invalid transpose"))
 			return
 		}
 		tranpose = t
@@ -62,8 +62,8 @@ func (c *InferenceController) Infer(ctx *gin.Context) {
 	defer file.Close()
 
 	srcFile := entities.NewFile(fileHeader.Filename, fileHeader.Size, file)
-	if err := c.changeVoiceUseCase.ChangeVoice(ctx, srcFile, model, tranpose); err != nil {
-		log.Error(err)
+	if err := c.changeVoiceUseCase.CreateChangeVoiceTask(ctx, srcFile, model, tranpose); err != nil {
+		log.Errorc(ctx, "%v", err)
 		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
 		return
 	}

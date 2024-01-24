@@ -11,9 +11,9 @@ type VoiceChangeTask struct {
 	Model          string
 	Transpose      int
 
-	tID    string
-	tType  constants.TaskType
-	tQueue constants.QueueType
+	TaskID    string
+	TaskType  constants.TaskType
+	TaskQueue constants.QueueType
 }
 
 func NewVoiceChangeTask(
@@ -29,14 +29,14 @@ func NewVoiceChangeTask(
 		Model:          model,
 		Transpose:      transpose,
 
-		tID:    tID,
-		tType:  tType,
-		tQueue: tQueue,
+		TaskID:    tID,
+		TaskType:  tType,
+		TaskQueue: tQueue,
 	}
 }
 
 func (p *VoiceChangeTask) ID() string {
-	return p.tID
+	return p.TaskID
 }
 
 func (p *VoiceChangeTask) Pack() ([]byte, error) {
@@ -44,9 +44,9 @@ func (p *VoiceChangeTask) Pack() ([]byte, error) {
 }
 
 func (p *VoiceChangeTask) Type() constants.TaskType {
-	return p.tType
+	return p.TaskType
 }
 
 func (p *VoiceChangeTask) Queue() constants.QueueType {
-	return p.tQueue
+	return p.TaskQueue
 }

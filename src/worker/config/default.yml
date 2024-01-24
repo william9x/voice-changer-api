@@ -1,0 +1,9 @@
+app:
+  name: Voice Changer Worker
+  security:
+    http:
+      publicUrls:
+        - /actuator/health
+        - /actuator/info
+        - /swagger/*
+

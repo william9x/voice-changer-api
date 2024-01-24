@@ -30,6 +30,6 @@ func (c *MinIOAdapter) PutObject(ctx context.Context, object *entities.File) err
 		return fmt.Errorf("upload file error: %v", err)
 	}
 
-	log.Debugf("uploaded file: bucket %s name %s", info.Bucket, info.Key)
+	log.Debugc(ctx, "uploaded file: bucket %s name %s", info.Bucket, info.Key)
 	return nil
 }

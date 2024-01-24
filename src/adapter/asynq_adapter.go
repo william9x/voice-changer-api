@@ -28,12 +28,13 @@ func (c *AsynqAdapter) Enqueue(ctx context.Context, task entities.Task) error {
 	taskOpts := []asynq.Option{
 		asynq.TaskID(task.ID()),
 		asynq.Queue(string(task.Queue())),
+		asynq.MaxRetry(0),
 	}
 	info, err := c.client.EnqueueContext(ctx, asynq.NewTask(string(task.Type()), packed), taskOpts...)
 	if err != nil {
 		return fmt.Errorf("enqueue task error: %v", err)
 	}
 
-	log.Infof("enqueue task: id %s type %s queue %s", info.ID, info.Type, info.Queue)
+	log.Infoc(ctx, "enqueue task: id %s type %s queue %s", info.ID, info.Type, info.Queue)
 	return err
 }

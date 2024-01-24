@@ -10,7 +10,7 @@ import (
 )
 
 type ChangeVoiceUseCase interface {
-	ChangeVoice(ctx context.Context, srcFile *entities.File, model string, transpose int) error
+	CreateChangeVoiceTask(ctx context.Context, srcFile *entities.File, model string, transpose int) error
 }
 
 type ChangeVoiceUseCaseImpl struct {
@@ -28,10 +28,10 @@ func NewChangeVoiceUseCaseImpl(
 	}
 }
 
-// ChangeVoice is a use case that changes voice of an audio file.
+// CreateChangeVoiceTask is a use case that changes voice of an audio file.
 // 1. Upload audio file to MinIO
 // 2. Create a task
-func (uc *ChangeVoiceUseCaseImpl) ChangeVoice(
+func (uc *ChangeVoiceUseCaseImpl) CreateChangeVoiceTask(
 	ctx context.Context, srcFile *entities.File, model string, transpose int,
 ) error {
 	taskId, err := uuid.NewV7()
