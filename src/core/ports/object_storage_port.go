@@ -6,5 +6,7 @@ import (
 )
 
 type ObjectStoragePort interface {
-	PutObject(ctx context.Context, object *entities.File) error
+	DownloadFile(ctx context.Context, name string) error
+	UploadFile(ctx context.Context, object *entities.File) error
+	UploadFilePath(ctx context.Context, srcName, targetName string) error
 }

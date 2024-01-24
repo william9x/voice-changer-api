@@ -6,6 +6,9 @@ down:
 
 tidy:
 	cd src/public && go mod tidy
+	cd src/worker && go mod tidy
+	cd src/core && go mod tidy
+	cd src/adapter && go mod tidy
 
 swagger-public:
 	cd src/public && swag init --parseDependency --parseDepth=3

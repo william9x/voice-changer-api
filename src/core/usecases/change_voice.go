@@ -42,7 +42,7 @@ func (uc *ChangeVoiceUseCaseImpl) CreateChangeVoiceTask(
 	taskIdStr := taskId.String()
 
 	srcFile.Name = fmt.Sprintf("source/%s%s", taskIdStr, srcFile.Ext)
-	if err := uc.objectStoragePort.PutObject(ctx, srcFile); err != nil {
+	if err := uc.objectStoragePort.UploadFile(ctx, srcFile); err != nil {
 		return err
 	}
 
