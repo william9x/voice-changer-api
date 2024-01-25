@@ -1,5 +1,5 @@
 app:
-  port: 8082
+  port: 8083
   logging:
     development: true
     JsonOutputMode: false
@@ -11,6 +11,9 @@ app:
     SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
     UseSSL: true
     BucketName: voice-changer
+  files:
+    BaseInputPath: "/home/liam/Downloads/voice-changer-backend"
+    BaseOutputPath: "/home/liam/Downloads/voice-changer-backend"
   asynq:
     Addr: localhost:6379
     Password: braly@123

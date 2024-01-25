@@ -6,6 +6,7 @@ import (
 	adapterProps "github.com/Braly-Ltd/voice-changer-api-adapter/properties"
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
 	"github.com/Braly-Ltd/voice-changer-api-worker/handlers"
+	"github.com/Braly-Ltd/voice-changer-api-worker/properties"
 	"github.com/Braly-Ltd/voice-changer-api-worker/routers"
 	"github.com/Braly-Ltd/voice-changer-api-worker/workers"
 	"github.com/golibs-starter/golib"
@@ -26,10 +27,12 @@ func All() fx.Option {
 		// Provide all application properties
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
+		golib.ProvideProps(properties.NewFileProperties),
 
 		// Provide clients
 		fx.Provide(clients.NewMinIOClient),
 		fx.Provide(clients.NewAsynqClient),
+		fx.Provide(clients.NewHTTPClient),
 
 		// Provide port's implements
 		fx.Provide(fx.Annotate(
@@ -37,6 +40,9 @@ func All() fx.Option {
 		),
 		fx.Provide(fx.Annotate(
 			adapter.NewAsynqAdapter, fx.As(new(ports.TaskQueuePort))),
+		),
+		fx.Provide(fx.Annotate(
+			adapter.NewSoVitsVCAdapter, fx.As(new(ports.InferencePort))),
 		),
 
 		// Provide task handlers

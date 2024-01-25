@@ -20,9 +20,8 @@ func NewMinIOAdapter(client *minio.Client, clientProps *properties.MinIOProperti
 	return &MinIOAdapter{client: client, props: clientProps}
 }
 
-func (c *MinIOAdapter) DownloadFile(ctx context.Context, name string) error {
-	path := "/tmp/" + name
-	if err := c.client.FGetObject(ctx, c.props.BucketName, name, path, minio.GetObjectOptions{}); err != nil {
+func (c *MinIOAdapter) DownloadFile(ctx context.Context, name, destPath string) error {
+	if err := c.client.FGetObject(ctx, c.props.BucketName, name, destPath, minio.GetObjectOptions{}); err != nil {
 		return fmt.Errorf("download object error: %v", err)
 	}
 	return nil
@@ -42,9 +41,8 @@ func (c *MinIOAdapter) UploadFile(ctx context.Context, object *entities.File) er
 	return nil
 }
 
-func (c *MinIOAdapter) UploadFilePath(ctx context.Context, srcName, targetName string) error {
-	sourceFile := "/tmp/" + srcName
-	info, err := c.client.FPutObject(ctx, c.props.BucketName, targetName, sourceFile, minio.PutObjectOptions{
+func (c *MinIOAdapter) UploadFilePath(ctx context.Context, targetFile, targetName string) error {
+	info, err := c.client.FPutObject(ctx, c.props.BucketName, targetName, targetFile, minio.PutObjectOptions{
 		ContentType: "application/octet-stream",
 	})
 	if err != nil {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
+	"github.com/Braly-Ltd/voice-changer-api-worker/properties"
 	"github.com/golibs-starter/golib/log"
 	"github.com/hibiken/asynq"
 	"github.com/vmihailenco/msgpack/v5"
@@ -12,11 +13,19 @@ import (
 
 type VoiceChangeHandler struct {
 	objectStoragePort ports.ObjectStoragePort
+	inferencePort     ports.InferencePort
+	fileProps         *properties.FileProperties
 }
 
-func NewVoiceChangeHandler(objectStoragePort ports.ObjectStoragePort) *VoiceChangeHandler {
+func NewVoiceChangeHandler(
+	objectStoragePort ports.ObjectStoragePort,
+	inferencePort ports.InferencePort,
+	fileProps *properties.FileProperties,
+) *VoiceChangeHandler {
 	return &VoiceChangeHandler{
 		objectStoragePort: objectStoragePort,
+		inferencePort:     inferencePort,
+		fileProps:         fileProps,
 	}
 }
 
@@ -30,11 +39,23 @@ func (r *VoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) error
 		return fmt.Errorf("unpack task %s failed: %v", payload.ID(), err)
 	}
 
-	if err := r.objectStoragePort.DownloadFile(ctx, payload.SrcFileName); err != nil {
+	localSourcePath := fmt.Sprintf("%s/%s", r.fileProps.BaseInputPath, payload.SrcFileName)
+	if err := r.objectStoragePort.DownloadFile(ctx, payload.SrcFileName, localSourcePath); err != nil {
 		return err
 	}
 
-	if err := r.objectStoragePort.UploadFilePath(ctx, payload.SrcFileName, payload.TargetFileName); err != nil {
+	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, payload.TargetFileName)
+	if err := r.inferencePort.CreateInference(ctx,
+		localSourcePath,
+		localTargetPath,
+		"/home/liam/Downloads/voice-changer-backend/models/trump/G_68800.pth",
+		"/home/liam/Downloads/voice-changer-backend/models/trump/config.json",
+		payload.Transpose,
+	); err != nil {
+		return err
+	}
+
+	if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, payload.TargetFileName); err != nil {
 		return err
 	}
 
