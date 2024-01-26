@@ -5,12 +5,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/Braly-Ltd/voice-changer-api-adapter/properties"
 	"net/http"
 )
 
 // SoVitsVCAdapter ...
 type SoVitsVCAdapter struct {
 	client *http.Client
+	props  *properties.SoVitsVcProperties
 }
 
 type CreateInferenceRequest struct {
@@ -22,8 +24,8 @@ type CreateInferenceRequest struct {
 }
 
 // NewSoVitsVCAdapter ...
-func NewSoVitsVCAdapter(client *http.Client) *SoVitsVCAdapter {
-	return &SoVitsVCAdapter{client: client}
+func NewSoVitsVCAdapter(client *http.Client, props *properties.SoVitsVcProperties) *SoVitsVCAdapter {
+	return &SoVitsVCAdapter{client: client, props: props}
 }
 
 func (r *SoVitsVCAdapter) CreateInference(
@@ -44,7 +46,7 @@ func (r *SoVitsVCAdapter) CreateInference(
 		return fmt.Errorf("encoding request error: %v", err)
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", "http://localhost:8082/api/v1/infer", buf)
+	httpReq, err := http.NewRequestWithContext(ctx, "POST", r.props.InferURL, buf)
 	if err != nil {
 		return fmt.Errorf("build http request error: %v", err)
 	}

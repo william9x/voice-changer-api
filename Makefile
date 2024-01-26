@@ -16,12 +16,22 @@ swagger-public:
 test:
 	cd src/public && go test ./...
 
-build-public:
+build-api:
 	docker build \
-		-t namnam206/minio-adapter-public:latest \
+		-t namnam206/voice-changer-api:latest \
 		--build-arg="BUILD_MODULE=public" \
 		-f ./docker/Dockerfile \
 		.
 
-push-public:
-	docker push namnam206/minio-adapter-public:latest
+push-api:
+	docker push namnam206/voice-changer-api:latest
+
+build-worker:
+	docker build \
+		-t namnam206/voice-changer-worker:latest \
+		--build-arg="BUILD_MODULE=worker" \
+		-f ./docker/Dockerfile \
+		.
+
+push-worker:
+	docker push namnam206/voice-changer-worker:latest

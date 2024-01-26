@@ -4,9 +4,13 @@ app:
     development: true
   swagger.enabled: true
   minio:
-    Endpoint: https://dev.storage.bralyvn.com
+    Endpoint: dev.storage.bralyvn.com
     PublicEndpoint: https://dev.storage.bralyvn.com
     AccessKeyID: uCCpbIoWR4ddYi1I94MS
     SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
-    UseSSL: true
+    UseSSL: false
     BucketName: voice-changer
+  asynq:
+    Addr: redis:6379
+    Password: braly@123
+    DB: 1

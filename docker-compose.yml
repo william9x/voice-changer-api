@@ -1,10 +1,42 @@
 version: '3.9'
 
 services:
+  api:
+    container_name: voice-changer-api
+    image: namnam206/voice-changer-api:latest
+    restart: always
+    links:
+      - redis
+    depends_on:
+      - redis
+    networks:
+      - backend-private
+    ports:
+      - "80:8080"
+    environment:
+      APP_PROFILES: dev
+
+  worker:
+    container_name: voice-changer-api
+    image: namnam206/voice-changer-worker:latest
+    restart: always
+    links:
+      - redis
+    depends_on:
+      - redis
+    networks:
+      - backend-private
+    ports:
+      - "8081:8080"
+    environment:
+      APP_PROFILES: dev
+
   redis:
     container_name: voice-changer-redis
     image: bitnami/redis:latest
     restart: always
+    volumes:
+      - /opt/redis/data:/bitnami/redis/data
     networks:
       - backend-private
     ports:
@@ -20,7 +52,7 @@ services:
     networks:
       - backend-private
     ports:
-      - "8081:8080"
+      - "8085:8080"
     links:
       - redis
     depends_on:

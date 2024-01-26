@@ -1,12 +1,34 @@
 app:
-  port: 8082
+  port: 8080
   logging:
     development: true
-  swagger.enabled: true
+  swagger.enabled: false
   minio:
-    Endpoint: https://dev.storage.bralyvn.com
+    Endpoint: dev.storage.bralyvn.com
     PublicEndpoint: https://dev.storage.bralyvn.com
     AccessKeyID: uCCpbIoWR4ddYi1I94MS
     SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
-    UseSSL: true
+    UseSSL: false
     BucketName: voice-changer
+  files:
+    BaseInputPath: "/home/voice-changer-models"
+    BaseOutputPath: "/home/voice-changer-models"
+    BaseModelPath: "/home/voice-changer-models/models"
+    ModelPaths:
+      trump:
+        model: "/trump/G_68800.pth"
+        config: "/trump/config.json"
+  svc:
+    Endpoint: http://localhost:8082
+    InferPath: /api/v1/infer
+  asynq:
+    Addr: 194.233.92.153:6379
+    Password: braly@123
+    DB: 1
+    Queue:
+      - name: level-2
+        priority: 20
+      - name: default
+        priority: 10
+    Worker:
+      Concurrency: 10

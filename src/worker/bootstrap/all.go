@@ -27,6 +27,7 @@ func All() fx.Option {
 		// Provide all application properties
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
+		golib.ProvideProps(adapterProps.NewSoVitsVcProperties),
 		golib.ProvideProps(properties.NewFileProperties),
 
 		// Provide clients

@@ -3,7 +3,7 @@ ARG BUILD_MODULE
 ARG BUILD_VERSION
 ARG BUILD_COMMIT_HASH
 ARG BUILD_TIME
-ARG BS_PKG=github.com/Braly-Ltd/minio-adapter-$BUILD_MODULE/bootstrap
+ARG BS_PKG=github.com/Braly-Ltd/voice-changer-api-$BUILD_MODULE/bootstrap
 ENV GO111MODULE=on
 RUN apk add --no-cache git
 COPY ./src /go/src

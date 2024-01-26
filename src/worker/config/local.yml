@@ -9,11 +9,19 @@ app:
     PublicEndpoint: https://dev.storage.bralyvn.com
     AccessKeyID: uCCpbIoWR4ddYi1I94MS
     SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
-    UseSSL: true
+    UseSSL: false
     BucketName: voice-changer
   files:
     BaseInputPath: "/home/liam/Downloads/voice-changer-backend"
     BaseOutputPath: "/home/liam/Downloads/voice-changer-backend"
+    BaseModelPath: "/home/liam/Downloads/voice-changer-backend/models"
+    ModelPaths:
+      trump:
+        model: "/trump/G_68800.pth"
+        config: "/trump/config.json"
+  svc:
+    Endpoint: http://localhost:8082
+    InferPath: /api/v1/infer
   asynq:
     Addr: localhost:6379
     Password: braly@123
