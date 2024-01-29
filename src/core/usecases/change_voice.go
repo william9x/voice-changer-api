@@ -6,11 +6,12 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-core/constants"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
+	"github.com/Braly-Ltd/voice-changer-api-public/resources"
 	"github.com/google/uuid"
 )
 
 type ChangeVoiceUseCase interface {
-	CreateChangeVoiceTask(ctx context.Context, srcFile *entities.File, model string, transpose int) error
+	CreateChangeVoiceTask(ctx context.Context, srcFile *entities.File, model string, transpose int) (*resources.Inference, error)
 }
 
 type ChangeVoiceUseCaseImpl struct {
@@ -33,17 +34,17 @@ func NewChangeVoiceUseCaseImpl(
 // 2. Create a task
 func (uc *ChangeVoiceUseCaseImpl) CreateChangeVoiceTask(
 	ctx context.Context, srcFile *entities.File, model string, transpose int,
-) error {
+) (*resources.Inference, error) {
 	taskId, err := uuid.NewV7()
 	if err != nil {
-		return fmt.Errorf("generate task id error: %v", err)
+		return nil, fmt.Errorf("generate task id error: %v", err)
 	}
 
 	taskIdStr := taskId.String()
 
 	srcFile.Name = fmt.Sprintf("source/%s%s", taskIdStr, srcFile.Ext)
 	if err := uc.objectStoragePort.UploadFile(ctx, srcFile); err != nil {
-		return err
+		return nil, err
 	}
 
 	targetFileName := fmt.Sprintf("target/%s%s", taskIdStr, srcFile.Ext)
@@ -58,8 +59,22 @@ func (uc *ChangeVoiceUseCaseImpl) CreateChangeVoiceTask(
 	)
 
 	if err := uc.taskQueuePort.Enqueue(ctx, task); err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	srcFileURL, err := uc.objectStoragePort.GetPreSignedObject(ctx, srcFile.Name)
+	if err != nil {
+		return nil, fmt.Errorf("get pre-signed src object error: %v", err)
+	}
+
+	targetFileURL, err := uc.objectStoragePort.GetPreSignedObject(ctx, targetFileName)
+	if err != nil {
+		return nil, fmt.Errorf("get pre-signed target object error: %v", err)
+	}
+
+	return resources.NewInferenceResource(
+		taskIdStr,
+		srcFileURL,
+		targetFileURL,
+	), nil
 }

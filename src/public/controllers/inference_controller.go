@@ -22,7 +22,7 @@ func NewInferenceController(
 	}
 }
 
-// Infer
+// CreateInfer
 //
 //	@ID				create-inference
 //	@Summary 		Change voice of an audio file to target voice
@@ -36,7 +36,7 @@ func NewInferenceController(
 //	@Success		200		{object}	response.Response{data=resources.Inference}
 //	@Failure		500		{object}	response.Response
 //	@Router			/api/v1/infer [post]
-func (c *InferenceController) Infer(ctx *gin.Context) {
+func (c *InferenceController) CreateInfer(ctx *gin.Context) {
 	model, exist := ctx.GetPostForm("model")
 	if !exist {
 		response.WriteError(ctx.Writer, exception.New(400, "Missing model"))
@@ -62,11 +62,12 @@ func (c *InferenceController) Infer(ctx *gin.Context) {
 	defer file.Close()
 
 	srcFile := entities.NewFile(fileHeader.Filename, fileHeader.Size, file)
-	if err := c.changeVoiceUseCase.CreateChangeVoiceTask(ctx, srcFile, model, tranpose); err != nil {
+	task, err := c.changeVoiceUseCase.CreateChangeVoiceTask(ctx, srcFile, model, tranpose)
+	if err != nil {
 		log.Errorc(ctx, "%v", err)
 		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
 		return
 	}
 
-	response.Write(ctx.Writer, response.Ok(nil))
+	response.Write(ctx.Writer, response.Created(task))
 }

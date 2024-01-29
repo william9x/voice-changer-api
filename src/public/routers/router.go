@@ -33,5 +33,5 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 	}
 
 	apiGroup := group.Group("/api")
-	apiGroup.POST("/v1/infer", p.InferenceController.Infer)
+	apiGroup.POST("/v1/infer", p.InferenceController.CreateInfer)
 }
