@@ -26,10 +26,8 @@ app:
     Addr: localhost:6379
     Password: braly@123
     DB: 1
-    Queue:
-      - name: level-2
-        priority: 20
-      - name: default
-        priority: 10
+    Queues:
+      level_2: 20
+      default: 10
     Worker:
       Concurrency: 10

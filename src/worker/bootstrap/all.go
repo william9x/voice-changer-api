@@ -8,7 +8,6 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-worker/handlers"
 	"github.com/Braly-Ltd/voice-changer-api-worker/properties"
 	"github.com/Braly-Ltd/voice-changer-api-worker/routers"
-	"github.com/Braly-Ltd/voice-changer-api-worker/workers"
 	"github.com/golibs-starter/golib"
 	golibgin "github.com/golibs-starter/golib-gin"
 	"go.uber.org/fx"
@@ -23,12 +22,14 @@ func All() fx.Option {
 		golib.BuildInfoOpt(Version, CommitHash, BuildTime),
 		golib.ActuatorEndpointOpt(),
 		golib.HttpRequestLogOpt(),
+		AsynqWorkerOpt(),
 
 		// Provide all application properties
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
 		golib.ProvideProps(adapterProps.NewSoVitsVcProperties),
 		golib.ProvideProps(properties.NewFileProperties),
+		golib.ProvideProps(properties.NewWorkerProperties),
 
 		// Provide clients
 		fx.Provide(clients.NewMinIOClient),
@@ -49,7 +50,7 @@ func All() fx.Option {
 		// Provide task handlers
 		handlers.ProvideHandler(handlers.NewVoiceChangeHandler),
 
-		workers.ProvideQueueWorker(),
+		ProvideAsynqWorker(),
 
 		// Provide use cases
 
@@ -63,12 +64,7 @@ func All() fx.Option {
 
 		// Graceful shutdown.
 		// OnStop hooks will run in reverse order.
+		OnStopAsynqWorker(),
 		golibgin.OnStopHttpServerOpt(),
-
-		fx.Invoke(startQueueWorker),
 	)
-}
-
-func startQueueWorker(queueWorker *workers.QueueWorker) {
-	go queueWorker.Start()
 }

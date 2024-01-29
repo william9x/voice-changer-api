@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"fmt"
+	"github.com/Braly-Ltd/voice-changer-api-core/constants"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
 	"github.com/Braly-Ltd/voice-changer-api-worker/properties"
@@ -27,6 +28,10 @@ func NewVoiceChangeHandler(
 		inferencePort:     inferencePort,
 		fileProps:         fileProps,
 	}
+}
+
+func (r *VoiceChangeHandler) Type() constants.TaskType {
+	return constants.TaskTypeInfer
 }
 
 // Handle

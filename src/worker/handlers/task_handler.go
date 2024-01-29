@@ -2,11 +2,13 @@ package handlers
 
 import (
 	"context"
+	"github.com/Braly-Ltd/voice-changer-api-core/constants"
 	"github.com/hibiken/asynq"
 	"go.uber.org/fx"
 )
 
 type TaskHandler interface {
+	Type() constants.TaskType
 	Handle(ctx context.Context, task *asynq.Task) error
 }
 

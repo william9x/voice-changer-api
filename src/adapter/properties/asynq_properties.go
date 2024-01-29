@@ -10,6 +10,7 @@ type AsynqProperties struct {
 	Password string `default:"secret"`
 	DB       int    `default:"1"`
 	PoolSize int    `default:"0"`
+	Queues   map[string]int
 }
 
 func NewAsynqProperties(loader config.Loader) (*AsynqProperties, error) {
