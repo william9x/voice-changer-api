@@ -1,5 +1,5 @@
 app:
-  port: 8080
+  port: 8081
   logging:
     development: true
     JsonOutputMode: true
@@ -20,7 +20,7 @@ app:
         model: "/trump/G_68800.pth"
         config: "/trump/config.json"
   svc:
-    Endpoint: http://localhost:8082
+    Endpoint: http://localhost:8080
     InferPath: /api/v1/infer
   asynq:
     Addr: 194.233.92.153:6379
