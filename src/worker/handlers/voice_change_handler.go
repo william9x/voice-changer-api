@@ -45,11 +45,17 @@ func (r *VoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) error
 	}
 
 	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, payload.TargetFileName)
+
+	model, exist := r.fileProps.ModelPaths[payload.Model]
+	if !exist {
+		return fmt.Errorf("model %s not found", payload.Model)
+	}
+
 	if err := r.inferencePort.CreateInference(ctx,
 		localSourcePath,
 		localTargetPath,
-		"/home/liam/Downloads/voice-changer-backend/models/trump/G_68800.pth",
-		"/home/liam/Downloads/voice-changer-backend/models/trump/config.json",
+		model.ModelPath,
+		model.ConfigPath,
 		payload.Transpose,
 	); err != nil {
 		return err

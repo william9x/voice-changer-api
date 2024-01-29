@@ -2,6 +2,7 @@ app:
   port: 8080
   logging:
     development: true
+    JsonOutputMode: true
   swagger.enabled: false
   minio:
     Endpoint: dev.storage.bralyvn.com
