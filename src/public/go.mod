@@ -5,6 +5,7 @@ go 1.21.6
 require (
 	github.com/Braly-Ltd/voice-changer-api-adapter v0.0.0-00010101000000-000000000000
 	github.com/Braly-Ltd/voice-changer-api-core v0.0.0-00010101000000-000000000000
+	github.com/gin-gonic/autotls v0.0.5
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golibs-starter/golib v1.0.1
 	github.com/golibs-starter/golib-gin v1.0.0
@@ -12,6 +13,7 @@ require (
 	github.com/swaggo/gin-swagger v1.6.0
 	github.com/swaggo/swag v1.16.2
 	go.uber.org/fx v1.20.1
+	golang.org/x/crypto v0.18.0
 )
 
 require (
@@ -75,9 +77,9 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.26.0 // indirect
 	golang.org/x/arch v0.7.0 // indirect
-	golang.org/x/crypto v0.18.0 // indirect
 	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a // indirect
 	golang.org/x/net v0.20.0 // indirect
+	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.16.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect

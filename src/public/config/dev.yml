@@ -1,5 +1,9 @@
 app:
   port: 8080
+  tls:
+    Enabled: true
+    CertFile: "/home/ssl/fullchain.pem"
+    KeyFile: "/home/ssl/privkey.pem"
   logging:
     development: true
   swagger.enabled: true

@@ -1,6 +1,8 @@
 package bootstrap
 
 import (
+	"context"
+	"errors"
 	adapter "github.com/Braly-Ltd/voice-changer-api-adapter"
 	"github.com/Braly-Ltd/voice-changer-api-adapter/clients"
 	adapterProps "github.com/Braly-Ltd/voice-changer-api-adapter/properties"
@@ -11,7 +13,9 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-public/routers"
 	"github.com/golibs-starter/golib"
 	golibgin "github.com/golibs-starter/golib-gin"
+	"github.com/golibs-starter/golib/log"
 	"go.uber.org/fx"
+	"net/http"
 )
 
 func All() fx.Option {
@@ -26,6 +30,7 @@ func All() fx.Option {
 
 		// Provide all application properties
 		golib.ProvideProps(properties.NewSwaggerProperties),
+		golib.ProvideProps(properties.NewTLSProperties),
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
 
@@ -52,11 +57,42 @@ func All() fx.Option {
 
 		// Provide gin http server auto config,
 		// actuator endpoints and application routers
-		golibgin.GinHttpServerOpt(),
+		GinHttpServerOpt(),
 		fx.Invoke(routers.RegisterGinRouters),
 
 		// Graceful shutdown.
 		// OnStop hooks will run in reverse order.
 		golibgin.OnStopHttpServerOpt(),
 	)
+}
+
+func GinHttpServerOpt() fx.Option {
+	return fx.Options(
+		fx.Provide(golibgin.NewGinEngine),
+		fx.Provide(golibgin.NewHTTPServer),
+		fx.Invoke(golibgin.RegisterHandlers),
+		fx.Invoke(OnStartHttpsServerHook),
+	)
+}
+
+func OnStartHttpsServerHook(lc fx.Lifecycle, app *golib.App, httpServer *http.Server, tls *properties.TLSProperties) {
+	lc.Append(fx.Hook{
+		OnStart: func(ctx context.Context) error {
+			log.Infof("Application will be served at %s. Service name: %s, service path: %s",
+				httpServer.Addr, app.Name(), app.Path())
+			go func() {
+				if tls.Enabled {
+					if err := httpServer.ListenAndServeTLS(tls.CertFile, tls.KeyFile); err != nil && !errors.Is(err, http.ErrServerClosed) {
+						log.Errorf("Could not serve HTTP request at %s, error [%v]", httpServer.Addr, err)
+					}
+				} else {
+					if err := httpServer.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+						log.Errorf("Could not serve HTTP request at %s, error [%v]", httpServer.Addr, err)
+					}
+				}
+				log.Infof("Stopped HTTP Server %s", httpServer.Addr)
+			}()
+			return nil
+		},
+	})
 }
