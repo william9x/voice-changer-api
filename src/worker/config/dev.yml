@@ -15,19 +15,6 @@ app:
     BaseInputPath: "/home/voice-changer-models"
     BaseOutputPath: "/home/voice-changer-models"
     BaseModelPath: "/home/voice-changer-models/models"
-    ModelPaths:
-      trump:
-        model: "/trump/G_68800.pth"
-        config: "/trump/config.json"
-      obama:
-        model: "/obama/G_50000.pth"
-        config: "/obama/config.json"
-      katy_perry:
-        model: "/katy_perry/G_28000.pth"
-        config: "/katy_perry/config.json"
-      elon_musk:
-        model: "/elon_musk/G_7688.pth"
-        config: "/elon_musk/config.json"
   svc:
     Endpoint: http://localhost:8080
     InferPath: /api/v1/infer
