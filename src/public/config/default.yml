@@ -2,11 +2,11 @@ app:
   name: Voice Changer API
   inference:
     SupportedFiles:
-      - mp3
-      - aac
-      - flac
-      - alac
-      - wav
+      - .mp3
+      - .aac
+      - .flac
+      - .alac
+      - .wav
   security:
     http:
       publicUrls:

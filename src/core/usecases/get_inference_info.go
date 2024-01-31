@@ -7,7 +7,7 @@ import (
 )
 
 type GetInferenceInfoUseCase interface {
-	GetInferenceInfo(ctx context.Context, id string) (*asynq.Task, error)
+	GetInferenceInfo(ctx context.Context, id string) (*asynq.TaskInfo, error)
 }
 
 type GetInferenceInfoUseCaseImpl struct {
@@ -21,6 +21,6 @@ func NewGetInferenceInfoUseCaseImpl(taskQueuePort ports.TaskQueuePort) *GetInfer
 }
 
 // GetInferenceInfo ...
-func (uc *GetInferenceInfoUseCaseImpl) GetInferenceInfo(ctx context.Context, id string) (*asynq.Task, error) {
-	return nil, nil
+func (uc *GetInferenceInfoUseCaseImpl) GetInferenceInfo(ctx context.Context, id string) (*asynq.TaskInfo, error) {
+	return uc.taskQueuePort.GetTask(ctx, "default", id)
 }

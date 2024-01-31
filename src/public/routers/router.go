@@ -39,5 +39,6 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 	apiGroup.GET("/v1/models", p.ModelController.GetModels)
 
 	// Inference APIs
+	apiGroup.GET("/v1/infer/:id", p.InferenceController.GetInfer)
 	apiGroup.POST("/v1/infer", p.InferenceController.CreateInfer)
 }

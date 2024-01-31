@@ -25,11 +25,13 @@ func NewInferenceController(
 	modelProps *properties.ModelProperties,
 	inferenceProps *properties.InferenceProperties,
 	changeVoiceUseCase usecases.ChangeVoiceUseCase,
+	getInferenceInfoUseCase usecases.GetInferenceInfoUseCase,
 ) *InferenceController {
 	return &InferenceController{
-		modelProps:         modelProps,
-		inferenceProps:     inferenceProps,
-		changeVoiceUseCase: changeVoiceUseCase,
+		modelProps:              modelProps,
+		inferenceProps:          inferenceProps,
+		changeVoiceUseCase:      changeVoiceUseCase,
+		getInferenceInfoUseCase: getInferenceInfoUseCase,
 	}
 }
 
@@ -41,12 +43,12 @@ func NewInferenceController(
 //	@Tags			InferenceController
 //	@Accept			json
 //	@Produce		json
-//	@Param			transpose	formData		int				false	"Default: 0"
+//	@Param			id		path    	string     true        "Task ID"
 //	@Success		200		{object}	response.Response{data=resources.Inference}
 //	@Success		400		{object}	response.Response
 //	@Success		404		{object}	response.Response
 //	@Failure		500		{object}	response.Response
-//	@Router			/api/v1/infer/:id [get]
+//	@Router			/api/v1/infer/{id} [get]
 func (c *InferenceController) GetInfer(ctx *gin.Context) {
 	id := ctx.Param("id")
 	if id == "" {
@@ -54,14 +56,20 @@ func (c *InferenceController) GetInfer(ctx *gin.Context) {
 		return
 	}
 
-	//task, err := c.getInferenceInfoUseCase.GetInferenceInfo(ctx, id)
-	//if err != nil {
-	//	log.Errorc(ctx, "%v", err)
-	//	response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
-	//	return
-	//}
+	taskInfo, err := c.getInferenceInfoUseCase.GetInferenceInfo(ctx, id)
+	if err != nil {
+		response.WriteError(ctx.Writer, exception.New(404, "Task not found"))
+		return
+	}
 
-	response.Write(ctx.Writer, response.Ok(nil))
+	resp, err := resources.NewFromTaskInfo(taskInfo)
+	if err != nil {
+		log.Errorc(ctx, "new task info resource error: %v", err)
+		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
+		return
+	}
+
+	response.Write(ctx.Writer, response.Ok(resp))
 }
 
 // CreateInfer
@@ -122,5 +130,5 @@ func (c *InferenceController) CreateInfer(ctx *gin.Context) {
 		return
 	}
 
-	response.Write(ctx.Writer, response.Created(resources.NewInferenceResource(taskID)))
+	response.Write(ctx.Writer, response.Created(resources.NewFromTaskID(taskID)))
 }

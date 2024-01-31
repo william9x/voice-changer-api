@@ -18,13 +18,9 @@ func NewAsynqAdapter(client *asynq.Client, inspector *asynq.Inspector) *AsynqAda
 	return &AsynqAdapter{client: client, inspector: inspector}
 }
 
-//func (c *AsynqAdapter) GetTask(ctx context.Context, id string) error {
-//	task, err := c.inspector.GetTaskInfo("default", id)
-//	if err != nil {
-//		return err
-//	}
-//	entities.Task()
-//}
+func (c *AsynqAdapter) GetTask(ctx context.Context, queue, id string) (*asynq.TaskInfo, error) {
+	return c.inspector.GetTaskInfo(queue, id)
+}
 
 // Enqueue ...
 func (c *AsynqAdapter) Enqueue(ctx context.Context, task *asynq.Task) error {
