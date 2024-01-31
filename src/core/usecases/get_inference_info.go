@@ -2,6 +2,7 @@ package usecases
 
 import (
 	"context"
+	"github.com/Braly-Ltd/voice-changer-api-core/constants"
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
 	"github.com/hibiken/asynq"
 )
@@ -22,5 +23,5 @@ func NewGetInferenceInfoUseCaseImpl(taskQueuePort ports.TaskQueuePort) *GetInfer
 
 // GetInferenceInfo ...
 func (uc *GetInferenceInfoUseCaseImpl) GetInferenceInfo(ctx context.Context, id string) (*asynq.TaskInfo, error) {
-	return uc.taskQueuePort.GetTask(ctx, "default", id)
+	return uc.taskQueuePort.GetTask(ctx, string(constants.QueueTypeDefault), id)
 }

@@ -193,13 +193,13 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "deadline": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "last_err": {
                     "type": "string"
                 },
                 "last_failed_at": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "max_retry": {
                     "type": "integer"
@@ -209,6 +209,9 @@ const docTemplate = `{
                 },
                 "queue": {
                     "type": "string"
+                },
+                "retention": {
+                    "type": "integer"
                 },
                 "retried": {
                     "type": "integer"
@@ -224,9 +227,6 @@ const docTemplate = `{
                 },
                 "task_status": {
                     "type": "string"
-                },
-                "timeout": {
-                    "$ref": "#/definitions/time.Duration"
                 },
                 "transpose": {
                     "type": "integer"
@@ -269,45 +269,6 @@ const docTemplate = `{
                     "$ref": "#/definitions/response.Meta"
                 }
             }
-        },
-        "time.Duration": {
-            "type": "integer",
-            "enum": [
-                -9223372036854775808,
-                9223372036854775807,
-                1,
-                1000,
-                1000000,
-                1000000000,
-                60000000000,
-                3600000000000,
-                -9223372036854775808,
-                9223372036854775807,
-                1,
-                1000,
-                1000000,
-                1000000000,
-                60000000000,
-                3600000000000
-            ],
-            "x-enum-varnames": [
-                "minDuration",
-                "maxDuration",
-                "Nanosecond",
-                "Microsecond",
-                "Millisecond",
-                "Second",
-                "Minute",
-                "Hour",
-                "minDuration",
-                "maxDuration",
-                "Nanosecond",
-                "Microsecond",
-                "Millisecond",
-                "Second",
-                "Minute",
-                "Hour"
-            ]
         }
     }
 }`

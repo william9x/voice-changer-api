@@ -12,17 +12,17 @@ type Inference struct {
 	TaskStatus   string `json:"task_status,omitempty"`
 	Queue        string `json:"queue,omitempty"`
 	Type         string `json:"type,omitempty"`
-	MaxRetry     int    `json:"max_retry,omitempty"`
-	Retried      int    `json:"retried,omitempty"`
+	MaxRetry     int    `json:"max_retry"`
+	Retried      int    `json:"retried"`
 	LastErr      string `json:"last_err,omitempty"`
 	LastFailedAt int64  `json:"last_failed_at,omitempty"`
-	Timeout      int64  `json:"timeout,omitempty"`
-	Deadline     int64  `json:"deadline,omitempty"`
+	Deadline     int64  `json:"deadline"`
+	Retention    int64  `json:"retention"`
 
 	SrcFileURL    string `json:"src_file_url,omitempty"`
 	TargetFileURL string `json:"target_file_url,omitempty"`
 	Model         string `json:"model,omitempty"`
-	Transpose     int    `json:"transpose,omitempty"`
+	Transpose     int    `json:"transpose"`
 }
 
 func NewFromTaskID(taskID string) *Inference {
@@ -37,6 +37,10 @@ func NewFromTaskInfo(info *asynq.TaskInfo) (*Inference, error) {
 		return nil, err
 	}
 
+	var failedAt int64 = 0
+	if info.LastFailedAt.UnixMilli() > 0 {
+		failedAt = info.LastFailedAt.UnixMilli()
+	}
 	return &Inference{
 		TaskID:       info.ID,
 		TaskStatus:   info.State.String(),
@@ -45,9 +49,9 @@ func NewFromTaskInfo(info *asynq.TaskInfo) (*Inference, error) {
 		MaxRetry:     info.MaxRetry,
 		Retried:      info.Retried,
 		LastErr:      info.LastErr,
-		LastFailedAt: info.LastFailedAt.UnixMilli(),
-		Timeout:      info.Timeout.Milliseconds(),
+		LastFailedAt: failedAt,
 		Deadline:     info.Deadline.UnixMilli(),
+		Retention:    info.Retention.Milliseconds(),
 
 		SrcFileURL:    payload.SrcFileURL,
 		TargetFileURL: payload.TargetFileURL,

@@ -73,7 +73,8 @@ func (uc *ChangeVoiceUseCaseImpl) CreateChangeVoiceTask(
 		asynq.TaskID(taskIdStr),
 		asynq.Queue(string(constants.QueueTypeDefault)),
 		asynq.MaxRetry(0),
-		asynq.Timeout(10 * time.Minute),
+		asynq.Deadline(time.Now().Add(10 * time.Minute)),
+		asynq.Retention(1 * time.Hour),
 	}
 	task := asynq.NewTask(string(constants.TaskTypeInfer), packed, taskOpts...)
 	if err := uc.taskQueuePort.Enqueue(ctx, task); err != nil {
