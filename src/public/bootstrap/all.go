@@ -56,6 +56,7 @@ func All() fx.Option {
 		// Provide controllers, these controllers will be used
 		// when register router was invoked
 		fx.Provide(controllers.NewInferenceController),
+		fx.Provide(controllers.NewModelController),
 
 		// Provide gin http server auto config,
 		// actuator endpoints and application routers

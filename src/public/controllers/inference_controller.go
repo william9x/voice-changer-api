@@ -42,7 +42,7 @@ func NewInferenceController(
 //	@Param			file		formData		file			true	"Source voice"
 //	@Param			model		formData		string			true	"Target voice"
 //	@Param			transpose	formData		int				false	"Default: 0"
-//	@Success		200		{object}	response.Response{data=resources.Inference}
+//	@Success		201		{object}	response.Response{data=resources.Inference}
 //	@Failure		500		{object}	response.Response
 //	@Router			/api/v1/infer [post]
 func (c *InferenceController) CreateInfer(ctx *gin.Context) {

@@ -20,6 +20,7 @@ type RegisterRoutersIn struct {
 
 	Actuator            *actuator.Endpoint
 	InferenceController *controllers.InferenceController
+	ModelController     *controllers.ModelController
 }
 
 func RegisterGinRouters(p RegisterRoutersIn) {
@@ -33,5 +34,10 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 	}
 
 	apiGroup := group.Group("/api")
+
+	// Model APIs
+	apiGroup.GET("/v1/models", p.ModelController.GetModels)
+
+	// Inference APIs
 	apiGroup.POST("/v1/infer", p.InferenceController.CreateInfer)
 }
