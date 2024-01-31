@@ -6,6 +6,7 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-core/usecases"
 	"github.com/Braly-Ltd/voice-changer-api-core/utils"
 	"github.com/Braly-Ltd/voice-changer-api-public/properties"
+	"github.com/Braly-Ltd/voice-changer-api-public/resources"
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib/exception"
 	"github.com/golibs-starter/golib/log"
@@ -14,9 +15,10 @@ import (
 )
 
 type InferenceController struct {
-	modelProps         *properties.ModelProperties
-	inferenceProps     *properties.InferenceProperties
-	changeVoiceUseCase usecases.ChangeVoiceUseCase
+	modelProps              *properties.ModelProperties
+	inferenceProps          *properties.InferenceProperties
+	changeVoiceUseCase      usecases.ChangeVoiceUseCase
+	getInferenceInfoUseCase usecases.GetInferenceInfoUseCase
 }
 
 func NewInferenceController(
@@ -31,6 +33,37 @@ func NewInferenceController(
 	}
 }
 
+// GetInfer
+//
+//	@ID				get-inference
+//	@Summary 		Get status of an inference task
+//	@Description
+//	@Tags			InferenceController
+//	@Accept			json
+//	@Produce		json
+//	@Param			transpose	formData		int				false	"Default: 0"
+//	@Success		200		{object}	response.Response{data=resources.Inference}
+//	@Success		400		{object}	response.Response
+//	@Success		404		{object}	response.Response
+//	@Failure		500		{object}	response.Response
+//	@Router			/api/v1/infer/:id [get]
+func (c *InferenceController) GetInfer(ctx *gin.Context) {
+	id := ctx.Param("id")
+	if id == "" {
+		response.WriteError(ctx.Writer, exception.New(400, "ID invalid"))
+		return
+	}
+
+	//task, err := c.getInferenceInfoUseCase.GetInferenceInfo(ctx, id)
+	//if err != nil {
+	//	log.Errorc(ctx, "%v", err)
+	//	response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
+	//	return
+	//}
+
+	response.Write(ctx.Writer, response.Ok(nil))
+}
+
 // CreateInfer
 //
 //	@ID				create-inference
@@ -43,6 +76,7 @@ func NewInferenceController(
 //	@Param			model		formData		string			true	"Target voice"
 //	@Param			transpose	formData		int				false	"Default: 0"
 //	@Success		201		{object}	response.Response{data=resources.Inference}
+//	@Failure		400		{object}	response.Response
 //	@Failure		500		{object}	response.Response
 //	@Router			/api/v1/infer [post]
 func (c *InferenceController) CreateInfer(ctx *gin.Context) {
@@ -81,12 +115,12 @@ func (c *InferenceController) CreateInfer(ctx *gin.Context) {
 		return
 	}
 
-	task, err := c.changeVoiceUseCase.CreateChangeVoiceTask(ctx, srcFile, model, tranpose)
+	taskID, err := c.changeVoiceUseCase.CreateChangeVoiceTask(ctx, srcFile, model, tranpose)
 	if err != nil {
 		log.Errorc(ctx, "%v", err)
 		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
 		return
 	}
 
-	response.Write(ctx.Writer, response.Created(task))
+	response.Write(ctx.Writer, response.Created(resources.NewInferenceResource(taskID)))
 }

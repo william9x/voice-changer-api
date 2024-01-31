@@ -6,12 +6,12 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-core/constants"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
-	"github.com/Braly-Ltd/voice-changer-api-public/resources"
 	"github.com/google/uuid"
+	"github.com/hibiken/asynq"
 )
 
 type ChangeVoiceUseCase interface {
-	CreateChangeVoiceTask(ctx context.Context, srcFile *entities.File, model string, transpose int) (*resources.Inference, error)
+	CreateChangeVoiceTask(ctx context.Context, srcFile *entities.File, model string, transpose int) (string, error)
 }
 
 type ChangeVoiceUseCaseImpl struct {
@@ -33,48 +33,50 @@ func NewChangeVoiceUseCaseImpl(
 // 1. Upload audio file to MinIO
 // 2. Create a task
 func (uc *ChangeVoiceUseCaseImpl) CreateChangeVoiceTask(
-	ctx context.Context, srcFile *entities.File, model string, transpose int,
-) (*resources.Inference, error) {
+	ctx context.Context,
+	srcFile *entities.File,
+	model string,
+	transpose int,
+) (string, error) {
 	taskId, err := uuid.NewV7()
 	if err != nil {
-		return nil, fmt.Errorf("generate task id error: %v", err)
+		return "", fmt.Errorf("generate task id error: %v", err)
 	}
 
 	taskIdStr := taskId.String()
 
 	srcFile.Name = fmt.Sprintf("source/%s%s", taskIdStr, srcFile.Ext)
 	if err := uc.objectStoragePort.UploadFile(ctx, srcFile); err != nil {
-		return nil, err
+		return "", err
 	}
 
 	targetFileName := fmt.Sprintf("target/%s%s", taskIdStr, srcFile.Ext)
-	task := entities.NewVoiceChangeTask(
-		taskIdStr,
-		srcFile.Name,
-		targetFileName,
-		model,
-		transpose,
-		constants.TaskTypeInfer,
-		constants.QueueTypeDefault,
-	)
-
-	if err := uc.taskQueuePort.Enqueue(ctx, task); err != nil {
-		return nil, err
-	}
 
 	srcFileURL, err := uc.objectStoragePort.GetPreSignedObject(ctx, srcFile.Name)
 	if err != nil {
-		return nil, fmt.Errorf("get pre-signed src object error: %v", err)
+		return "", fmt.Errorf("get pre-signed src object error: %v", err)
 	}
 
 	targetFileURL, err := uc.objectStoragePort.GetPreSignedObject(ctx, targetFileName)
 	if err != nil {
-		return nil, fmt.Errorf("get pre-signed target object error: %v", err)
+		return "", fmt.Errorf("get pre-signed target object error: %v", err)
 	}
 
-	return resources.NewInferenceResource(
-		taskIdStr,
-		srcFileURL,
-		targetFileURL,
-	), nil
+	payload := entities.NewVoiceChangePayload(srcFile.Name, srcFileURL, targetFileName, targetFileURL, model, transpose)
+	packed, err := payload.Packed()
+	if err != nil {
+		return "", fmt.Errorf("pack payload error: %v", err)
+	}
+
+	taskOpts := []asynq.Option{
+		asynq.TaskID(taskIdStr),
+		asynq.Queue(string(constants.QueueTypeDefault)),
+		asynq.MaxRetry(0),
+	}
+	task := asynq.NewTask(string(constants.TaskTypeInfer), packed, taskOpts...)
+	if err := uc.taskQueuePort.Enqueue(ctx, task); err != nil {
+		return "", err
+	}
+
+	return taskIdStr, nil
 }

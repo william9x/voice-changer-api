@@ -39,35 +39,35 @@ func (r *VoiceChangeHandler) Type() constants.TaskType {
 // 2. Process file
 // 3. Upload processed file to MinIO
 func (r *VoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) error {
-	var payload entities.VoiceChangeTask
-	if err := msgpack.Unmarshal(task.Payload(), &payload); err != nil {
-		return fmt.Errorf("unpack task %s failed: %v", payload.ID(), err)
+	var vcPayload entities.VoiceChangePayload
+	if err := msgpack.Unmarshal(task.Payload(), &vcPayload); err != nil {
+		return fmt.Errorf("unpack task failed: %v", err)
 	}
-	log.Infoc(ctx, "task %s is processing", payload.ID())
+	log.Infoc(ctx, "task %s is processing", task.Type())
 
-	localSourcePath := fmt.Sprintf("%s/%s", r.fileProps.BaseInputPath, payload.SrcFileName)
-	if err := r.objectStoragePort.DownloadFile(ctx, payload.SrcFileName, localSourcePath); err != nil {
+	localSourcePath := fmt.Sprintf("%s/%s", r.fileProps.BaseInputPath, vcPayload.SrcFileName)
+	if err := r.objectStoragePort.DownloadFile(ctx, vcPayload.SrcFileName, localSourcePath); err != nil {
 		return err
 	}
 
-	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, payload.TargetFileName)
+	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 
-	modelPath := fmt.Sprintf("%s/%s/G.pth", r.fileProps.BaseModelPath, payload.Model)
-	modelConfigPath := fmt.Sprintf("%s/%s/config.json", r.fileProps.BaseModelPath, payload.Model)
+	modelPath := fmt.Sprintf("%s/%s/G.pth", r.fileProps.BaseModelPath, vcPayload.Model)
+	modelConfigPath := fmt.Sprintf("%s/%s/config.json", r.fileProps.BaseModelPath, vcPayload.Model)
 	if err := r.inferencePort.CreateInference(ctx,
 		localSourcePath,
 		localTargetPath,
 		modelPath,
 		modelConfigPath,
-		payload.Transpose,
+		vcPayload.Transpose,
 	); err != nil {
 		return err
 	}
 
-	if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, payload.TargetFileName); err != nil {
+	if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, vcPayload.TargetFileName); err != nil {
 		return err
 	}
 
-	log.Infoc(ctx, "task %s is done", payload.ID())
+	log.Infoc(ctx, "task %s is done", task.Type())
 	return nil
 }

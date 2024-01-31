@@ -3,34 +3,32 @@ package adapter
 import (
 	"context"
 	"fmt"
-	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"github.com/golibs-starter/golib/log"
 	"github.com/hibiken/asynq"
 )
 
 // AsynqAdapter ...
 type AsynqAdapter struct {
-	client *asynq.Client
+	client    *asynq.Client
+	inspector *asynq.Inspector
 }
 
 // NewAsynqAdapter ...
-func NewAsynqAdapter(client *asynq.Client) *AsynqAdapter {
-	return &AsynqAdapter{client: client}
+func NewAsynqAdapter(client *asynq.Client, inspector *asynq.Inspector) *AsynqAdapter {
+	return &AsynqAdapter{client: client, inspector: inspector}
 }
 
-// Enqueue ...
-func (c *AsynqAdapter) Enqueue(ctx context.Context, task entities.Task) error {
-	packed, err := task.Pack()
-	if err != nil {
-		return fmt.Errorf("pack payload error: %v", err)
-	}
+//func (c *AsynqAdapter) GetTask(ctx context.Context, id string) error {
+//	task, err := c.inspector.GetTaskInfo("default", id)
+//	if err != nil {
+//		return err
+//	}
+//	entities.Task()
+//}
 
-	taskOpts := []asynq.Option{
-		asynq.TaskID(task.ID()),
-		asynq.Queue(string(task.Queue())),
-		asynq.MaxRetry(0),
-	}
-	info, err := c.client.EnqueueContext(ctx, asynq.NewTask(string(task.Type()), packed), taskOpts...)
+// Enqueue ...
+func (c *AsynqAdapter) Enqueue(ctx context.Context, task *asynq.Task) error {
+	info, err := c.client.EnqueueContext(ctx, task)
 	if err != nil {
 		return fmt.Errorf("enqueue task error: %v", err)
 	}

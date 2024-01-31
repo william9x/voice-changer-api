@@ -1,52 +1,30 @@
 package entities
 
-import (
-	"github.com/Braly-Ltd/voice-changer-api-core/constants"
-	"github.com/vmihailenco/msgpack/v5"
-)
+import "github.com/vmihailenco/msgpack/v5"
 
-type VoiceChangeTask struct {
+type VoiceChangePayload struct {
 	SrcFileName    string
+	SrcFileURL     string
 	TargetFileName string
+	TargetFileURL  string
 	Model          string
 	Transpose      int
-
-	TaskID    string
-	TaskType  constants.TaskType
-	TaskQueue constants.QueueType
 }
 
-func NewVoiceChangeTask(
-	tID string,
-	srcFileName, targetFileName, model string,
+func NewVoiceChangePayload(
+	srcFileName, srcFileURL, targetFileName, targetFileURL, model string,
 	transpose int,
-	tType constants.TaskType,
-	tQueue constants.QueueType,
-) *VoiceChangeTask {
-	return &VoiceChangeTask{
+) *VoiceChangePayload {
+	return &VoiceChangePayload{
 		SrcFileName:    srcFileName,
+		SrcFileURL:     srcFileURL,
 		TargetFileName: targetFileName,
+		TargetFileURL:  targetFileURL,
 		Model:          model,
 		Transpose:      transpose,
-
-		TaskID:    tID,
-		TaskType:  tType,
-		TaskQueue: tQueue,
 	}
 }
 
-func (p *VoiceChangeTask) ID() string {
-	return p.TaskID
-}
-
-func (p *VoiceChangeTask) Pack() ([]byte, error) {
+func (p *VoiceChangePayload) Packed() ([]byte, error) {
 	return msgpack.Marshal(p)
-}
-
-func (p *VoiceChangeTask) Type() constants.TaskType {
-	return p.TaskType
-}
-
-func (p *VoiceChangeTask) Queue() constants.QueueType {
-	return p.TaskQueue
 }

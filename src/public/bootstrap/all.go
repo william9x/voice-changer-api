@@ -39,6 +39,7 @@ func All() fx.Option {
 		// Provide clients
 		fx.Provide(clients.NewMinIOClient),
 		fx.Provide(clients.NewAsynqClient),
+		fx.Provide(clients.NewAsynqInspector),
 
 		// Provide port's implements
 		fx.Provide(fx.Annotate(
@@ -51,6 +52,9 @@ func All() fx.Option {
 		// Provide use cases
 		fx.Provide(fx.Annotate(
 			usecases.NewChangeVoiceUseCaseImpl, fx.As(new(usecases.ChangeVoiceUseCase))),
+		),
+		fx.Provide(fx.Annotate(
+			usecases.NewGetInferenceInfoUseCaseImpl, fx.As(new(usecases.GetInferenceInfoUseCase))),
 		),
 
 		// Provide controllers, these controllers will be used
