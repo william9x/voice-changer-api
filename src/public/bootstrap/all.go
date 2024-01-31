@@ -31,6 +31,8 @@ func All() fx.Option {
 		// Provide all application properties
 		golib.ProvideProps(properties.NewSwaggerProperties),
 		golib.ProvideProps(properties.NewTLSProperties),
+		golib.ProvideProps(properties.NewModelProperties),
+		golib.ProvideProps(properties.NewInferenceProperties),
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
 

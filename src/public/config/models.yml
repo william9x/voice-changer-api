@@ -1,0 +1,128 @@
+app:
+  models.data:
+    - ID: trump
+      Name: Donald Trump
+      category: Politician
+    - ID: elon_musk
+      Name: Elon Musk
+      category: Billionaire
+    - ID: katy_perry
+      Name: Katy Perry
+      category: Singer
+    - ID: obama
+      Name: Barack Obama
+      category: Presidence
+    - ID: charlie_puth
+      Name: Charlie Puth
+      category: Singer
+    - ID: doja_cat
+      Name: Doja Cat
+      category: Rapper
+    - ID: justin_bieber
+      Name: Justin Bieber
+      category: Singer
+    - ID: biden
+      Name: Joe Biden
+      category: Politician
+    - ID: jay_z
+      Name: Jay Z
+      category: Rapper
+    - ID: dua_lipa
+      Name: Dua Lipa
+      category: Singer
+    - ID: bts_jimin
+      Name: Jimin (from BTS)
+      category: Singer
+    - ID: homer_simpson
+      Name: Homer Simpson
+      category: Character
+    - ID: the_weeknd
+      Name: The Weeknd
+      category: Singer
+    - ID: lady_gaga
+      Name: Lady Gaga
+      category: Actress
+    - ID: nicki_nicole
+      Name: Nicki Minaj
+      category: Rapper
+    - ID: wrld_juice
+      Name: Juice WRLD
+      category: Rapper
+    - ID: redvelvet_irene
+      Name: Irene
+      category: Singer
+    - ID: bad_bunny
+      Name: Bad Bunny
+      category: Singer
+    - ID: exo_kai
+      Name: Kai
+      category: Singer
+    - ID: elton_john
+      Name: Elton John
+      category: Composer
+    - ID: harry_styles
+      Name: Harry Styles
+      category: Singer
+    - ID: troye_sivan
+      Name: Troye Sivan
+      category: Singer
+    - ID: britney_spears
+      Name: Britney Spears
+      category: Singer
+    - ID: bruno_mars
+      Name: Bruno Mars
+      category: Singer
+    - ID: chris_brown
+      Name: Chris Brown
+      category: Singer
+    - ID: blackpink_jennie
+      Name: Jennie Kim
+      category: Singer
+    - ID: blackpink_jiso
+      Name: Jiso
+      category: Singer
+    - ID: jung_kook
+      Name: Jung Kook
+      category: Singer
+    - ID: taylor_swift
+      Name: Taylor Swift
+      category: Singer
+    - ID: rosalia
+      Name: Rosalia
+      category: Singer
+    - ID: bilie_eilish
+      Name: Bilie Eilish
+      category: Singer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

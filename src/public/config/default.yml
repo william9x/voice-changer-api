@@ -1,9 +1,15 @@
 app:
   name: Voice Changer API
+  inference:
+    SupportedFiles:
+      - mp3
+      - aac
+      - flac
+      - alac
+      - wav
   security:
     http:
       publicUrls:
         - /actuator/health
         - /actuator/info
         - /swagger/*
-
