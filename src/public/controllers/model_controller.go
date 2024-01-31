@@ -27,9 +27,9 @@ func NewModelController(
 //	@Tags			ModelController
 //	@Accept			json
 //	@Produce		json
-//	@Success		200		{object}	response.Response{data=resources.model}
+//	@Success		200		{object}	response.Response{data=resources.Model}
 //	@Failure		500		{object}	response.Response
-//	@Router			/api/v1/infer [post]
+//	@Router			/api/v1/models [get]
 func (c *ModelController) GetModels(ctx *gin.Context) {
 	models := make([]*resources.Model, 0, len(c.modelProps.Data))
 	for _, model := range c.modelProps.Data {

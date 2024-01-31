@@ -16,22 +16,18 @@ swagger-public:
 test:
 	cd src/public && go test ./...
 
-build-api:
+api:
 	docker build \
 		-t namnam206/voice-changer-api:latest \
 		--build-arg="BUILD_MODULE=public" \
 		-f ./docker/Dockerfile \
-		.
+		. && \
+		docker push namnam206/voice-changer-api:latest
 
-push-api:
-	docker push namnam206/voice-changer-api:latest
-
-build-worker:
+worker:
 	docker build \
 		-t namnam206/voice-changer-worker:latest \
 		--build-arg="BUILD_MODULE=worker" \
 		-f ./docker/Dockerfile \
-		.
-
-push-worker:
-	docker push namnam206/voice-changer-worker:latest
+		. && \
+		docker push namnam206/voice-changer-worker:latest

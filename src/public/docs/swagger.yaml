@@ -3,11 +3,18 @@ definitions:
     properties:
       source_url:
         type: string
-      status:
-        type: string
       target_url:
         type: string
       task_id:
+        type: string
+    type: object
+  resources.Model:
+    properties:
+      category:
+        type: string
+      id:
+        type: string
+      name:
         type: string
     type: object
   response.Meta:
@@ -51,8 +58,8 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
             allOf:
             - $ref: '#/definitions/response.Response'
@@ -67,4 +74,28 @@ paths:
       summary: Change voice of an audio file to target voice
       tags:
       - InferenceController
+  /api/v1/models:
+    get:
+      consumes:
+      - application/json
+      operationId: get-models
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/resources.Model'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.Response'
+      summary: Get list supported models
+      tags:
+      - ModelController
 swagger: "2.0"
