@@ -8,6 +8,7 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
 	"github.com/google/uuid"
 	"github.com/hibiken/asynq"
+	"time"
 )
 
 type ChangeVoiceUseCase interface {
@@ -72,6 +73,7 @@ func (uc *ChangeVoiceUseCaseImpl) CreateChangeVoiceTask(
 		asynq.TaskID(taskIdStr),
 		asynq.Queue(string(constants.QueueTypeDefault)),
 		asynq.MaxRetry(0),
+		asynq.Timeout(10 * time.Minute),
 	}
 	task := asynq.NewTask(string(constants.TaskTypeInfer), packed, taskOpts...)
 	if err := uc.taskQueuePort.Enqueue(ctx, task); err != nil {

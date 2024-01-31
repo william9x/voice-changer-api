@@ -4,21 +4,20 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"github.com/hibiken/asynq"
 	"github.com/vmihailenco/msgpack/v5"
-	"time"
 )
 
 // Inference ...
 type Inference struct {
-	TaskID       string        `json:"task_id,omitempty"`
-	TaskStatus   string        `json:"task_status,omitempty"`
-	Queue        string        `json:"queue,omitempty"`
-	Type         string        `json:"type,omitempty"`
-	MaxRetry     int           `json:"max_retry,omitempty"`
-	Retried      int           `json:"retried,omitempty"`
-	LastErr      string        `json:"last_err,omitempty"`
-	LastFailedAt time.Time     `json:"last_failed_at"`
-	Timeout      time.Duration `json:"timeout,omitempty"`
-	Deadline     time.Time     `json:"deadline"`
+	TaskID       string `json:"task_id,omitempty"`
+	TaskStatus   string `json:"task_status,omitempty"`
+	Queue        string `json:"queue,omitempty"`
+	Type         string `json:"type,omitempty"`
+	MaxRetry     int    `json:"max_retry,omitempty"`
+	Retried      int    `json:"retried,omitempty"`
+	LastErr      string `json:"last_err,omitempty"`
+	LastFailedAt int64  `json:"last_failed_at,omitempty"`
+	Timeout      int64  `json:"timeout,omitempty"`
+	Deadline     int64  `json:"deadline,omitempty"`
 
 	SrcFileURL    string `json:"src_file_url,omitempty"`
 	TargetFileURL string `json:"target_file_url,omitempty"`
@@ -46,9 +45,9 @@ func NewFromTaskInfo(info *asynq.TaskInfo) (*Inference, error) {
 		MaxRetry:     info.MaxRetry,
 		Retried:      info.Retried,
 		LastErr:      info.LastErr,
-		LastFailedAt: info.LastFailedAt,
-		Timeout:      info.Timeout,
-		Deadline:     info.Deadline,
+		LastFailedAt: info.LastFailedAt.UnixMilli(),
+		Timeout:      info.Timeout.Milliseconds(),
+		Deadline:     info.Deadline.UnixMilli(),
 
 		SrcFileURL:    payload.SrcFileURL,
 		TargetFileURL: payload.TargetFileURL,
