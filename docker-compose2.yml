@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  svc-adapter:
+    container_name: voice-changer-svc-adapter
+    image: namnam206/voice-changer-svc-adapter:latest
+    restart: always
+    volumes:
+      - /home/voice-changer-models:/home/voice-changer-models
+    networks:
+      - backend-private
+
+  worker:
+    container_name: voice-changer-worker
+    image: namnam206/voice-changer-worker:latest
+    restart: always
+    links:
+      - svc-adapter
+    depends_on:
+      - svc-adapter
+    networks:
+      - backend-private
+    environment:
+      APP_PROFILES: dev
+
+networks:
+  backend-private:
+    driver: bridge # default network driver type

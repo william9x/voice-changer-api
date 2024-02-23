@@ -16,14 +16,13 @@ app:
     BaseOutputPath: "/home/voice-changer-models"
     BaseModelPath: "/home/voice-changer-models/models"
   svc:
-    Endpoint: http://localhost:8080
+    Endpoint: http://svc-adapter:8080
     InferPath: /api/v1/infer
   asynq:
     Addr: 194.233.92.153:6379
     Password: braly@123
     DB: 1
     Queues:
-      level_2: 20
-      default: 10
+      vc_default: 10
     Worker:
       Concurrency: 10
