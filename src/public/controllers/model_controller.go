@@ -33,7 +33,7 @@ func NewModelController(
 func (c *ModelController) GetModels(ctx *gin.Context) {
 	models := make([]*resources.Model, 0, len(c.modelProps.Data))
 	for _, model := range c.modelProps.Data {
-		models = append(models, resources.NewModelResource(model.ID, model.Name, model.Category))
+		models = append(models, resources.NewModelResource(model.ID, model.Name, model.Category, model.LogoURL))
 	}
 
 	response.Write(ctx.Writer, response.Ok(models))

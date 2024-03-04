@@ -19,6 +19,7 @@ type ModelData struct {
 	ID       string
 	Name     string
 	Category string
+	LogoURL  string
 }
 
 func (t *ModelProperties) Prefix() string {
