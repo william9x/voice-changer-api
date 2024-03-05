@@ -6,29 +6,41 @@ import (
 	"github.com/vmihailenco/msgpack/v5"
 )
 
-// Inference ...
-type Inference struct {
-	TaskID       string `json:"task_id,omitempty"`
-	TaskStatus   string `json:"task_status,omitempty"`
-	Queue        string `json:"queue,omitempty"`
-	Type         string `json:"type,omitempty"`
-	MaxRetry     int    `json:"max_retry"`
-	Retried      int    `json:"retried"`
-	LastErr      string `json:"last_err,omitempty"`
-	LastFailedAt int64  `json:"last_failed_at,omitempty"`
-	Deadline     int64  `json:"deadline"`
-	Retention    int64  `json:"retention"`
+// CreateInference ...
+type CreateInference struct {
+	ID        string `json:"id,omitempty"`
+	Model     string `json:"model,omitempty"`
+	Type      string `json:"type,omitempty"`
+	Status    string `json:"status,omitempty"` // Status of the task. Values: active, pending, scheduled, retry, archived, completed
+	MaxRetry  int    `json:"max_retry"`
+	Deadline  string `json:"deadline,omitempty"` // Deadline for completing the task
+	Retention string `json:"retention"`          // Retention in hours for how long to store the task info
 
-	SrcFileURL    string `json:"src_file_url,omitempty"`
-	TargetFileURL string `json:"target_file_url,omitempty"`
-	Model         string `json:"model,omitempty"`
-	Transpose     int    `json:"transpose"`
+	// @Deprecated
+	TaskID string `json:"task_id,omitempty"`
 }
 
-func NewFromTaskID(taskID string) *Inference {
-	return &Inference{
-		TaskID: taskID,
-	}
+// Inference ...
+type Inference struct {
+	ID            string `json:"id,omitempty"`
+	Model         string `json:"model,omitempty"`
+	Type          string `json:"type,omitempty"`
+	Status        string `json:"status,omitempty"` // Status of the task. Values: active, pending, scheduled, retry, archived, completed
+	MaxRetry      int    `json:"max_retry"`
+	Deadline      int64  `json:"deadline"`
+	Retried       int    `json:"retried"`
+	LastErr       string `json:"last_err,omitempty"`
+	LastFailedAt  int64  `json:"last_failed_at,omitempty"`
+	SrcFileURL    string `json:"src_file_url,omitempty"`
+	TargetFileURL string `json:"target_file_url,omitempty"`
+	Transpose     int    `json:"transpose"`
+	EnqueuedAt    string `json:"enqueued_at,omitempty"`
+	CompletedAt   string `json:"completed_at,omitempty"`
+
+	// @Deprecated
+	TaskID     string `json:"task_id,omitempty"`
+	TaskStatus string `json:"task_status,omitempty"`
+	Queue      string `json:"queue,omitempty"`
 }
 
 func NewFromTaskInfo(info *asynq.TaskInfo) (*Inference, error) {
@@ -51,7 +63,6 @@ func NewFromTaskInfo(info *asynq.TaskInfo) (*Inference, error) {
 		LastErr:      info.LastErr,
 		LastFailedAt: failedAt,
 		Deadline:     info.Deadline.UnixMilli(),
-		Retention:    info.Retention.Milliseconds(),
 
 		SrcFileURL:    payload.SrcFileURL,
 		TargetFileURL: payload.TargetFileURL,

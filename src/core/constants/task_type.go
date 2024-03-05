@@ -3,5 +3,9 @@ package constants
 type TaskType string
 
 const (
-	TaskTypeInfer TaskType = "voice-changer:infer"
+	TaskTypeInfer TaskType = "vc"
+)
+
+const (
+	TaskIDSeparator = "|"
 )

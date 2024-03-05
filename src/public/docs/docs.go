@@ -44,8 +44,17 @@ const docTemplate = `{
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "default": "vc",
+                        "description": "Task's type",
+                        "name": "type",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
                         "type": "integer",
-                        "description": "Default: 0",
+                        "default": 0,
+                        "description": "Transpose",
                         "name": "transpose",
                         "in": "formData"
                     }
@@ -62,7 +71,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/resources.Inference"
+                                            "$ref": "#/definitions/resources.CreateInference"
                                         }
                                     }
                                 }
@@ -189,11 +198,53 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "resources.Inference": {
+        "resources.CreateInference": {
             "type": "object",
             "properties": {
                 "deadline": {
+                    "description": "Deadline for completing the task",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "max_retry": {
                     "type": "integer"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "retention": {
+                    "description": "Retention in hours for how long to store the task info",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Status of the task. Values: active, pending, scheduled, retry, archived, completed",
+                    "type": "string"
+                },
+                "task_id": {
+                    "description": "@Deprecated",
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "resources.Inference": {
+            "type": "object",
+            "properties": {
+                "completed_at": {
+                    "type": "string"
+                },
+                "deadline": {
+                    "type": "integer"
+                },
+                "enqueued_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
                 },
                 "last_err": {
                     "type": "string"
@@ -210,19 +261,21 @@ const docTemplate = `{
                 "queue": {
                     "type": "string"
                 },
-                "retention": {
-                    "type": "integer"
-                },
                 "retried": {
                     "type": "integer"
                 },
                 "src_file_url": {
                     "type": "string"
                 },
+                "status": {
+                    "description": "Status of the task. Values: active, pending, scheduled, retry, archived, completed",
+                    "type": "string"
+                },
                 "target_file_url": {
                     "type": "string"
                 },
                 "task_id": {
+                    "description": "@Deprecated",
                     "type": "string"
                 },
                 "task_status": {
@@ -243,6 +296,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
+                    "type": "string"
+                },
+                "logo_url": {
                     "type": "string"
                 },
                 "name": {

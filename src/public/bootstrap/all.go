@@ -9,8 +9,10 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
 	"github.com/Braly-Ltd/voice-changer-api-core/usecases"
 	"github.com/Braly-Ltd/voice-changer-api-public/controllers"
+	"github.com/Braly-Ltd/voice-changer-api-public/middlewares"
 	"github.com/Braly-Ltd/voice-changer-api-public/properties"
 	"github.com/Braly-Ltd/voice-changer-api-public/routers"
+	"github.com/Braly-Ltd/voice-changer-api-public/services"
 	"github.com/golibs-starter/golib"
 	golibgin "github.com/golibs-starter/golib-gin"
 	"github.com/golibs-starter/golib/log"
@@ -51,11 +53,9 @@ func All() fx.Option {
 
 		// Provide use cases
 		fx.Provide(fx.Annotate(
-			usecases.NewChangeVoiceUseCaseImpl, fx.As(new(usecases.ChangeVoiceUseCase))),
-		),
-		fx.Provide(fx.Annotate(
 			usecases.NewGetInferenceInfoUseCaseImpl, fx.As(new(usecases.GetInferenceInfoUseCase))),
 		),
+		fx.Provide(services.NewInferenceService),
 
 		// Provide controllers, these controllers will be used
 		// when register router was invoked
@@ -66,6 +66,7 @@ func All() fx.Option {
 		// actuator endpoints and application routers
 		GinHttpServerOpt(),
 		fx.Invoke(routers.RegisterGinRouters),
+		fx.Invoke(middlewares.RegisterFormValidators),
 
 		// Graceful shutdown.
 		// OnStop hooks will run in reverse order.

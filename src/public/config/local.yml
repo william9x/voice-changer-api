@@ -5,12 +5,12 @@ app:
     JsonOutputMode: false
   swagger.enabled: true
   minio:
-    Endpoint: dev.storage.bralyvn.com
-    PublicEndpoint: https://dev.storage.bralyvn.com
+    Endpoint: storage.bralyvn.com
+    PublicEndpoint: https://storage.bralyvn.com
     AccessKeyID: uCCpbIoWR4ddYi1I94MS
     SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
     UseSSL: true
-    BucketName: voice-changer
+    BucketName: voice-changer-dev
   asynq:
     Addr: localhost:6379
     Password: braly@123

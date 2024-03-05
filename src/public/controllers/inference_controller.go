@@ -6,31 +6,32 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-core/usecases"
 	"github.com/Braly-Ltd/voice-changer-api-core/utils"
 	"github.com/Braly-Ltd/voice-changer-api-public/properties"
+	"github.com/Braly-Ltd/voice-changer-api-public/requests"
 	"github.com/Braly-Ltd/voice-changer-api-public/resources"
+	"github.com/Braly-Ltd/voice-changer-api-public/services"
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib/exception"
 	"github.com/golibs-starter/golib/log"
 	"github.com/golibs-starter/golib/web/response"
-	"strconv"
 )
 
 type InferenceController struct {
 	modelProps              *properties.ModelProperties
 	inferenceProps          *properties.InferenceProperties
-	changeVoiceUseCase      usecases.ChangeVoiceUseCase
+	inferenceService        *services.InferenceService
 	getInferenceInfoUseCase usecases.GetInferenceInfoUseCase
 }
 
 func NewInferenceController(
 	modelProps *properties.ModelProperties,
 	inferenceProps *properties.InferenceProperties,
-	changeVoiceUseCase usecases.ChangeVoiceUseCase,
+	inferenceService *services.InferenceService,
 	getInferenceInfoUseCase usecases.GetInferenceInfoUseCase,
 ) *InferenceController {
 	return &InferenceController{
 		modelProps:              modelProps,
 		inferenceProps:          inferenceProps,
-		changeVoiceUseCase:      changeVoiceUseCase,
+		inferenceService:        inferenceService,
 		getInferenceInfoUseCase: getInferenceInfoUseCase,
 	}
 }
@@ -82,53 +83,42 @@ func (c *InferenceController) GetInfer(ctx *gin.Context) {
 //	@Produce		json
 //	@Param			file		formData		file			true	"Source voice"
 //	@Param			model		formData		string			true	"Target voice"
-//	@Param			transpose	formData		int				false	"Default: 0"
-//	@Success		201		{object}	response.Response{data=resources.Inference}
+//	@Param			type		formData		string			true	"Task's type" default(vc)
+//	@Param			transpose	formData		int				false	"Transpose" default(0)
+//	@Success		201		{object}	response.Response{data=resources.CreateInference}
 //	@Failure		400		{object}	response.Response
 //	@Failure		500		{object}	response.Response
 //	@Router			/api/v1/infer [post]
 func (c *InferenceController) CreateInfer(ctx *gin.Context) {
-	model, exist := ctx.GetPostForm("model")
-	if !exist {
-		response.WriteError(ctx.Writer, exception.New(400, "Missing model"))
-		return
-	}
-	if _, exist := c.modelProps.DataMap[model]; !exist {
-		response.WriteError(ctx.Writer, exception.New(400, "Model not supported"))
+	var req requests.CreateInferenceRequest
+	if err := ctx.ShouldBind(&req); err != nil {
+		response.WriteError(ctx.Writer, exception.New(40000, err.Error()))
 		return
 	}
 
-	tranpose := 0
-	tranposeStr, exist := ctx.GetPostForm("transpose")
-	if exist {
-		t, err := strconv.Atoi(tranposeStr)
-		if err != nil {
-			response.WriteError(ctx.Writer, exception.New(400, "Invalid transpose"))
-			return
-		}
-		tranpose = t
+	if _, exist := c.modelProps.DataMap[req.Model]; !exist {
+		response.WriteError(ctx.Writer, exception.New(40000, "Model not supported"))
+		return
 	}
 
-	file, fileHeader, err := ctx.Request.FormFile("file")
+	file, err := entities.NewFile(req.RawFile)
 	if err != nil {
-		response.WriteError(ctx.Writer, exception.New(400, "Invalid file"))
+		response.WriteError(ctx.Writer, exception.New(40000, "RawFile invalid"))
 		return
 	}
-	defer file.Close()
-
-	srcFile := entities.NewFile(fileHeader.Filename, fileHeader.Size, file)
-	if !utils.ContainsString(c.inferenceProps.SupportedFiles, srcFile.Ext) {
-		msg := fmt.Sprintf("File %s not supported. Supported file are: %v", srcFile.Ext, c.inferenceProps.SupportedFiles)
-		response.WriteError(ctx.Writer, exception.New(400, msg))
+	if !utils.ContainsString(c.inferenceProps.SupportedFiles, file.Ext) {
+		msg := fmt.Sprintf("RawFile %s not supported. Supported rawFile are: %v", req.SrcFile.Ext, c.inferenceProps.SupportedFiles)
+		response.WriteError(ctx.Writer, exception.New(40000, msg))
 		return
 	}
 
-	taskID, err := c.changeVoiceUseCase.CreateChangeVoiceTask(ctx, srcFile, model, tranpose)
+	req.SrcFile = file
+	resp, err := c.inferenceService.CreateInference(ctx, req)
 	if err != nil {
 		log.Errorc(ctx, "%v", err)
 		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))
 		return
 	}
 
-	response.Write(ctx.Writer, response.Created(resources.NewFromTaskID(taskID)))
+	response.Write(ctx.Writer, response.Created(resp))
 }
