@@ -5,24 +5,24 @@ import (
 	"github.com/golibs-starter/golib/config"
 )
 
-type SoVitsVcProperties struct {
+type RVCProperties struct {
 	Endpoint  string
 	InferPath string
 
 	InferURL string `default:""`
 }
 
-func NewSoVitsVcProperties(loader config.Loader) (*SoVitsVcProperties, error) {
-	props := SoVitsVcProperties{}
+func NewRVCProperties(loader config.Loader) (*RVCProperties, error) {
+	props := RVCProperties{}
 	err := loader.Bind(&props)
 	return &props, err
 }
 
-func (r *SoVitsVcProperties) Prefix() string {
-	return "app.svc"
+func (r *RVCProperties) Prefix() string {
+	return "app.rvc"
 }
 
-func (r *SoVitsVcProperties) PostBinding() error {
+func (r *RVCProperties) PostBinding() error {
 	r.InferURL = fmt.Sprintf("%s%s", r.Endpoint, r.InferPath)
 	return nil
 }

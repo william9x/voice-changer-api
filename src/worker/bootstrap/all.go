@@ -27,7 +27,7 @@ func All() fx.Option {
 		// Provide all application properties
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
-		golib.ProvideProps(adapterProps.NewSoVitsVcProperties),
+		golib.ProvideProps(adapterProps.NewRVCProperties),
 		golib.ProvideProps(properties.NewFileProperties),
 		golib.ProvideProps(properties.NewWorkerProperties),
 
@@ -44,7 +44,7 @@ func All() fx.Option {
 			adapter.NewAsynqAdapter, fx.As(new(ports.TaskQueuePort))),
 		),
 		fx.Provide(fx.Annotate(
-			adapter.NewSoVitsVCAdapter, fx.As(new(ports.InferencePort))),
+			adapter.NewRVCAdapter, fx.As(new(ports.InferencePort))),
 		),
 
 		// Provide task handlers

@@ -44,6 +44,7 @@ func (r *RVCVoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) er
 		return fmt.Errorf("unpack task failed: %v", err)
 	}
 	log.Infoc(ctx, "task %s is processing", task.Type())
+	log.Debugc(ctx, "task payload: %+v", vcPayload)
 
 	localSourcePath := fmt.Sprintf("%s/%s", r.fileProps.BaseInputPath, vcPayload.SrcFileName)
 	if err := r.objectStoragePort.DownloadFile(ctx, vcPayload.SrcFileName, localSourcePath); err != nil {
@@ -53,17 +54,19 @@ func (r *RVCVoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) er
 	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 
 	basePath := fmt.Sprintf("%s/%s", r.fileProps.BaseModelPath, vcPayload.Model)
-	if err := r.inferencePort.CreateInference(ctx,
-		localSourcePath,
-		localTargetPath,
-		fmt.Sprintf("%s/G.pth", basePath),
-		fmt.Sprintf("%s/model.index", basePath),
-		vcPayload.Transpose,
-	); err != nil {
+	if err := r.inferencePort.CreateInference(ctx, entities.InferenceCommand{
+		ModelPath: fmt.Sprintf("%s/G.pth", basePath),
+		IndexPath: fmt.Sprintf("%s/model.index", basePath),
+		InputPath: localSourcePath,
+		OutPath:   localTargetPath,
+		Transpose: vcPayload.Transpose,
+	}); err != nil {
 		return err
 	}
 
+	log.Infoc(ctx, "task %s inference completed, start uploading file at %s", task.Type(), vcPayload.TargetFileName)
 	if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, vcPayload.TargetFileName); err != nil {
+		log.Errorf("upload file error: %v", err)
 		return err
 	}
 

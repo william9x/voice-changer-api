@@ -12,12 +12,12 @@ app:
     UseSSL: true
     BucketName: voice-changer-dev
   files:
-    BaseInputPath: "/home/voice-changer-models"
-    BaseOutputPath: "/home/voice-changer-models"
-    BaseModelPath: "/home/voice-changer-models/models"
-  svc:
+    BaseInputPath: "/root/app/audio"
+    BaseOutputPath: "/root/app/audio"
+    BaseModelPath: "/root/app/voice-changer-backend/assets/weights/rvc"
+  rvc:
     Endpoint: http://localhost:8080
-    InferPath: /api/v1/infer
+    InferPath: /api/v1/rvc/infer
   asynq:
     Addr: 194.233.85.239:6379
     Password: braly@123
