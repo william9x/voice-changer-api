@@ -10,11 +10,11 @@ app:
   minio:
     Endpoint: storage.bralyvn.com
     PublicEndpoint: https://storage.bralyvn.com
-    AccessKeyID: uCCpbIoWR4ddYi1I94MS
-    SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
+    AccessKeyID: I2TCgnjRBzblw6rP50sO
+    SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
     UseSSL: true
     BucketName: voice-changer-dev
   asynq:
-    Addr: redis:6379
+    Addr: 194.233.85.239:6379
     Password: braly@123
     DB: 1
