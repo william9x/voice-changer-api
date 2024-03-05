@@ -12,33 +12,33 @@ import (
 	"github.com/vmihailenco/msgpack/v5"
 )
 
-type VoiceChangeHandler struct {
+type RVCVoiceChangeHandler struct {
 	objectStoragePort ports.ObjectStoragePort
 	inferencePort     ports.InferencePort
 	fileProps         *properties.FileProperties
 }
 
-func NewVoiceChangeHandler(
+func NewRVCVoiceChangeHandler(
 	objectStoragePort ports.ObjectStoragePort,
 	inferencePort ports.InferencePort,
 	fileProps *properties.FileProperties,
-) *VoiceChangeHandler {
-	return &VoiceChangeHandler{
+) *RVCVoiceChangeHandler {
+	return &RVCVoiceChangeHandler{
 		objectStoragePort: objectStoragePort,
 		inferencePort:     inferencePort,
 		fileProps:         fileProps,
 	}
 }
 
-func (r *VoiceChangeHandler) Type() constants.TaskType {
-	return constants.TaskTypeInfer
+func (r *RVCVoiceChangeHandler) Type() constants.TaskType {
+	return constants.TaskTypeVoiceChangeRVC
 }
 
 // Handle
 // 1. Download file from MinIO
 // 2. Process file
 // 3. Upload processed file to MinIO
-func (r *VoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) error {
+func (r *RVCVoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	var vcPayload entities.VoiceChangePayload
 	if err := msgpack.Unmarshal(task.Payload(), &vcPayload); err != nil {
 		return fmt.Errorf("unpack task failed: %v", err)
@@ -52,13 +52,12 @@ func (r *VoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) error
 
 	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 
-	modelPath := fmt.Sprintf("%s/%s/G.pth", r.fileProps.BaseModelPath, vcPayload.Model)
-	modelConfigPath := fmt.Sprintf("%s/%s/config.json", r.fileProps.BaseModelPath, vcPayload.Model)
+	basePath := fmt.Sprintf("%s/%s", r.fileProps.BaseModelPath, vcPayload.Model)
 	if err := r.inferencePort.CreateInference(ctx,
 		localSourcePath,
 		localTargetPath,
-		modelPath,
-		modelConfigPath,
+		fmt.Sprintf("%s/G.pth", basePath),
+		fmt.Sprintf("%s/model.index", basePath),
 		vcPayload.Transpose,
 	); err != nil {
 		return err

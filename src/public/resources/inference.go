@@ -10,13 +10,12 @@ import (
 
 // CreateInference ...
 type CreateInference struct {
-	ID        string `json:"id,omitempty"`
-	Model     string `json:"model,omitempty"`
-	Type      string `json:"type,omitempty"`
-	Status    string `json:"status,omitempty"` // Status of the task. Values: active, pending, scheduled, retry, archived, completed
-	MaxRetry  int    `json:"max_retry"`
-	Deadline  string `json:"deadline,omitempty"` // Deadline for completing the task
-	Retention string `json:"retention"`          // Retention in hours for how long to store the task info
+	ID       string `json:"id,omitempty"`
+	Model    string `json:"model,omitempty"`
+	Type     string `json:"type,omitempty"`
+	Status   string `json:"status,omitempty"` // Status of the task. Values: active, pending, scheduled, retry, archived, completed
+	MaxRetry int    `json:"max_retry"`
+	Deadline string `json:"deadline,omitempty"` // Deadline for completing the task
 
 	// @Deprecated
 	TaskID string `json:"task_id,omitempty"`

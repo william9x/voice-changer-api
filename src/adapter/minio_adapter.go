@@ -30,7 +30,6 @@ func (r *MinIOAdapter) DownloadFile(ctx context.Context, name, destPath string) 
 // UploadFile ...
 func (r *MinIOAdapter) UploadFile(ctx context.Context, object entities.File) error {
 	info, err := r.client.PutObject(ctx, r.props.BucketName, object.Name, object.Content, object.Size, minio.PutObjectOptions{
-		ContentType:  "application/octet-stream",
 		UserMetadata: object.MetaData,
 	})
 	if err != nil {

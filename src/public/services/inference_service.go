@@ -80,13 +80,12 @@ func (r *InferenceService) CreateInference(ctx context.Context, req requests.Cre
 	}
 
 	return resources.CreateInference{
-		ID:        utils.BuildInferenceKey(queue, taskId),
-		Model:     req.Model,
-		Type:      req.Type,
-		Status:    asynq.TaskStatePending.String(),
-		MaxRetry:  maxRetry,
-		Deadline:  deadline.Format(time.RFC3339),
-		Retention: time.Now().Add(retention).Format(time.RFC3339),
+		ID:       utils.BuildInferenceKey(queue, taskId),
+		Model:    req.Model,
+		Type:     req.Type,
+		Status:   asynq.TaskStatePending.String(),
+		MaxRetry: maxRetry,
+		Deadline: deadline.Format(time.RFC3339),
 
 		// @Deprecated
 		TaskID: utils.BuildInferenceKey(queue, taskId),

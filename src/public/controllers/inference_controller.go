@@ -89,7 +89,7 @@ func (c *InferenceController) GetInfer(ctx *gin.Context) {
 //	@Produce		json
 //	@Param			file		formData		file			true	"Source voice"
 //	@Param			model		formData		string			true	"Target voice"
-//	@Param			type		formData		string			true	"Task's type" default(vc)
+//	@Param			type		formData		string			true	"Task's type" default(vc:rvc)
 //	@Param			transpose	formData		int				false	"Transpose" default(0)
 //	@Success		201		{object}	response.Response{data=resources.CreateInference}
 //	@Failure		400		{object}	response.Response

@@ -48,7 +48,7 @@ func All() fx.Option {
 		),
 
 		// Provide task handlers
-		handlers.ProvideHandler(handlers.NewVoiceChangeHandler),
+		handlers.ProvideHandler(handlers.NewRVCVoiceChangeHandler),
 
 		ProvideAsynqWorker(),
 

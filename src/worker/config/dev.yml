@@ -5,21 +5,21 @@ app:
     JsonOutputMode: true
   swagger.enabled: false
   minio:
-    Endpoint: dev.storage.bralyvn.com
-    PublicEndpoint: https://dev.storage.bralyvn.com
-    AccessKeyID: uCCpbIoWR4ddYi1I94MS
-    SecretAccessKey: w3Ydr8YTSwJxtcl9H9NrTK8oI0EF4yR77VPY0zMu
-    UseSSL: false
-    BucketName: voice-changer
+    Endpoint: storage.bralyvn.com
+    PublicEndpoint: https://storage.bralyvn.com
+    AccessKeyID: I2TCgnjRBzblw6rP50sO
+    SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
+    UseSSL: true
+    BucketName: voice-changer-dev
   files:
     BaseInputPath: "/home/voice-changer-models"
     BaseOutputPath: "/home/voice-changer-models"
     BaseModelPath: "/home/voice-changer-models/models"
   svc:
-    Endpoint: http://svc-adapter:8080
+    Endpoint: http://localhost:8080
     InferPath: /api/v1/infer
   asynq:
-    Addr: 194.233.92.153:6379
+    Addr: 194.233.85.239:6379
     Password: braly@123
     DB: 1
     Queues:

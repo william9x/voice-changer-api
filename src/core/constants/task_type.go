@@ -3,7 +3,7 @@ package constants
 type TaskType string
 
 const (
-	TaskTypeInfer TaskType = "vc"
+	TaskTypeVoiceChangeRVC TaskType = "vc:rvc"
 )
 
 const (
