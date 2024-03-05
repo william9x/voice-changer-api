@@ -13,7 +13,6 @@ func NewFileProperties(loader config.Loader) (*FileProperties, error) {
 type FileProperties struct {
 	BaseInputPath  string
 	BaseOutputPath string
-	BaseModelPath  string
 }
 
 func (r *FileProperties) Prefix() string {

@@ -45,7 +45,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "default": "vc",
+                        "default": "vc:rvc",
                         "description": "Task's type",
                         "name": "type",
                         "in": "formData",
@@ -214,10 +214,6 @@ const docTemplate = `{
                 "model": {
                     "type": "string"
                 },
-                "retention": {
-                    "description": "Retention in hours for how long to store the task info",
-                    "type": "string"
-                },
                 "status": {
                     "description": "Status of the task. Values: active, pending, scheduled, retry, archived, completed",
                     "type": "string"
@@ -238,7 +234,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "deadline": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "enqueued_at": {
                     "type": "string"
@@ -250,7 +246,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "last_failed_at": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "max_retry": {
                     "type": "integer"

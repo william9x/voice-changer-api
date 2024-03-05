@@ -53,10 +53,9 @@ func (r *RVCVoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) er
 
 	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 
-	basePath := fmt.Sprintf("%s/%s", r.fileProps.BaseModelPath, vcPayload.Model)
 	if err := r.inferencePort.CreateInference(ctx, entities.InferenceCommand{
-		ModelPath: fmt.Sprintf("%s/G.pth", basePath),
-		IndexPath: fmt.Sprintf("%s/model.index", basePath),
+		ModelPath: fmt.Sprintf("%s/G.pth", vcPayload.Model),
+		IndexPath: fmt.Sprintf("%s/model.index", vcPayload.Model),
 		InputPath: localSourcePath,
 		OutPath:   localTargetPath,
 		Transpose: vcPayload.Transpose,

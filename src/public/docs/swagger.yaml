@@ -10,9 +10,6 @@ definitions:
         type: integer
       model:
         type: string
-      retention:
-        description: Retention in hours for how long to store the task info
-        type: string
       status:
         description: 'Status of the task. Values: active, pending, scheduled, retry,
           archived, completed'
@@ -28,7 +25,7 @@ definitions:
       completed_at:
         type: string
       deadline:
-        type: integer
+        type: string
       enqueued_at:
         type: string
       id:
@@ -36,7 +33,7 @@ definitions:
       last_err:
         type: string
       last_failed_at:
-        type: integer
+        type: string
       max_retry:
         type: integer
       model:
@@ -108,7 +105,7 @@ paths:
         name: model
         required: true
         type: string
-      - default: vc
+      - default: vc:rvc
         description: Task's type
         in: formData
         name: type
