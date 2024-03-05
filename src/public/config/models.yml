@@ -6,12 +6,15 @@ app:
     - ID: elon_musk
       Name: Elon Musk
       category: Billionaire
-    - ID: katy_perry
-      Name: Katy Perry
+    - ID: taylor_swift
+      Name: Taylor Swift
       category: Singer
     - ID: obama
       Name: Barack Obama
       category: Presidence
+    - ID: jung_kook
+      Name: Jung Kook
+      category: Singer
     - ID: charlie_puth
       Name: Charlie Puth
       category: Singer
@@ -24,6 +27,15 @@ app:
     - ID: biden
       Name: Joe Biden
       category: Politician
+    - ID: wrld_juice
+      Name: Juice WRLD
+      category: Rapper
+    - ID: patrick_star
+      Name: Patrick Star
+      category: Fiction Character
+    - ID: katy_perry
+      Name: Katy Perry
+      category: Singer
     - ID: jay_z
       Name: Jay Z
       category: Rapper
@@ -42,20 +54,17 @@ app:
     - ID: lady_gaga
       Name: Lady Gaga
       category: Actress
-    - ID: nicki_nicole
+    - ID: nicki_minaj
       Name: Nicki Minaj
       category: Rapper
-    - ID: wrld_juice
-      Name: Juice WRLD
-      category: Rapper
+    - ID: blackpink_jennie
+      Name: Jennie Kim
+      category: Singer
     - ID: redvelvet_irene
       Name: Irene
       category: Singer
     - ID: bad_bunny
       Name: Bad Bunny
-      category: Singer
-    - ID: exo_kai
-      Name: Kai
       category: Singer
     - ID: elton_john
       Name: Elton John
@@ -75,17 +84,8 @@ app:
     - ID: chris_brown
       Name: Chris Brown
       category: Singer
-    - ID: blackpink_jennie
-      Name: Jennie Kim
-      category: Singer
     - ID: blackpink_jiso
       Name: Jiso
-      category: Singer
-    - ID: jung_kook
-      Name: Jung Kook
-      category: Singer
-    - ID: taylor_swift
-      Name: Taylor Swift
       category: Singer
     - ID: rosalia
       Name: Rosalia
@@ -93,6 +93,64 @@ app:
     - ID: bilie_eilish
       Name: Bilie Eilish
       category: Singer
+    - ID: ariana_grande
+      Name: Ariana
+      category: Singer
+    - ID: olivia_rodrigo
+      Name: Olivia
+      category: Singer
+    - ID: rihanna
+      Name: Rihanna
+      category: Singer
+    - ID: starrail_seele
+      Name: Seele
+      category: Singer
+    - ID: snsd_taeyeon
+      Name: Taeyeon
+      category: Singer
+    - ID: bts_jhope
+      Name: Jhope
+      category: Singer
+    - ID: bts_suga
+      Name: SUGA
+      category: Singer
+    - ID: starrail_7th
+      Name: 7th
+      category: Singer
+    - ID: bts_taehyung
+      Name: Taehyung
+      category: Singer
+    - ID: jack_black
+      Name: Jack
+      category: Actor
+    - ID: quasimoto
+      Name: Quasimoto
+      category: Singer
+    - ID: post_malone
+      Name: Malone
+      category: Singer
+    - ID: 21savage
+      Name: 21Savage
+      category: Singer
+
+    - ID: kim_jong_un
+      Name: Kim
+      category: Politician
+    - ID: putin
+      Name: Putin
+      category: Politician
+    - ID: mickey_mouse
+      Name: Mickey
+      category: Fictional Character
+    - ID: batman
+      Name: Batman
+      category: Fictional Character
+    - ID: messi
+      Name: Messi
+      category: Athlete
+    - ID: godzilla
+      Name: Godzilla
+      category: Fictional Character
 
 
 

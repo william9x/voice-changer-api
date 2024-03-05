@@ -6,6 +6,7 @@ ARG BUILD_TIME
 ARG BS_PKG=github.com/Braly-Ltd/voice-changer-api-$BUILD_MODULE/bootstrap
 ENV GO111MODULE=on
 RUN apk add --no-cache git
+RUN apk add --no-cache ca-certificates && update-ca-certificates
 COPY ./src /go/src
 WORKDIR /go/src/$BUILD_MODULE
 RUN env APP_PROFILES=dev GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./binary \
@@ -13,6 +14,7 @@ RUN env APP_PROFILES=dev GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./bin
 
 FROM scratch
 ARG BUILD_MODULE
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /go/src/$BUILD_MODULE/config /app/config
 COPY --from=builder /go/src/$BUILD_MODULE/binary /app
 EXPOSE 8080
