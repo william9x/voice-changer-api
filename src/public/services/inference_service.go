@@ -28,6 +28,11 @@ func NewInferenceService(
 	}
 }
 
+// GetInferenceInfo ...
+func (r *InferenceService) GetInferenceInfo(ctx context.Context, queueId, id string) (*asynq.TaskInfo, error) {
+	return r.taskQueuePort.GetTask(ctx, queueId, id)
+}
+
 func (r *InferenceService) CreateInference(ctx context.Context, req requests.CreateInferenceRequest) (resources.CreateInference, error) {
 	taskId, err := utils.NewUUID()
 	if err != nil {
@@ -109,5 +114,6 @@ func newInferPayload(
 		SrcFileURL:     srFileURL,
 		TargetFileName: targetFileName,
 		TargetFileURL:  targetFileURL,
+		EnqueuedAt:     time.Now().UnixMilli(),
 	}
 }

@@ -57,13 +57,19 @@ func (c *InferenceController) GetInfer(ctx *gin.Context) {
 		return
 	}
 
-	taskInfo, err := c.getInferenceInfoUseCase.GetInferenceInfo(ctx, id)
+	queueId, inferId := utils.ExtractInferenceKey(ctx.Param("id"))
+	if queueId == "" || inferId == "" {
+		response.WriteError(ctx.Writer, exception.New(400, "Invalid infer ID"))
+		return
+	}
+
+	inferInfo, err := c.inferenceService.GetInferenceInfo(ctx, queueId, inferId)
 	if err != nil {
 		response.WriteError(ctx.Writer, exception.New(404, "Task not found"))
 		return
 	}
 
-	resp, err := resources.NewFromTaskInfo(taskInfo)
+	resp, err := resources.NewFromTaskInfo(inferInfo)
 	if err != nil {
 		log.Errorc(ctx, "new task info resource error: %v", err)
 		response.WriteError(ctx.Writer, exception.New(500, "Internal Server Error"))

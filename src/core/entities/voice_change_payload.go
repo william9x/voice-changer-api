@@ -9,6 +9,7 @@ type VoiceChangePayload struct {
 	SrcFileURL     string
 	TargetFileName string
 	TargetFileURL  string
+	EnqueuedAt     int64
 }
 
 func (p *VoiceChangePayload) Packed() ([]byte, error) {

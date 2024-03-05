@@ -2,8 +2,10 @@ package resources
 
 import (
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
+	"github.com/Braly-Ltd/voice-changer-api-core/utils"
 	"github.com/hibiken/asynq"
 	"github.com/vmihailenco/msgpack/v5"
+	"time"
 )
 
 // CreateInference ...
@@ -22,20 +24,21 @@ type CreateInference struct {
 
 // Inference ...
 type Inference struct {
-	ID            string `json:"id,omitempty"`
-	Model         string `json:"model,omitempty"`
-	Type          string `json:"type,omitempty"`
-	Status        string `json:"status,omitempty"` // Status of the task. Values: active, pending, scheduled, retry, archived, completed
-	MaxRetry      int    `json:"max_retry"`
-	Deadline      int64  `json:"deadline"`
-	Retried       int    `json:"retried"`
-	LastErr       string `json:"last_err,omitempty"`
-	LastFailedAt  int64  `json:"last_failed_at,omitempty"`
+	ID           string `json:"id,omitempty"`
+	Model        string `json:"model,omitempty"`
+	Type         string `json:"type,omitempty"`
+	Status       string `json:"status,omitempty"` // Status of the task. Values: active, pending, scheduled, retry, archived, completed
+	MaxRetry     int    `json:"max_retry"`
+	Deadline     string `json:"deadline"`
+	Retried      int    `json:"retried"`
+	LastErr      string `json:"last_err,omitempty"`
+	LastFailedAt string `json:"last_failed_at,omitempty"`
+	EnqueuedAt   string `json:"enqueued_at,omitempty"`
+	CompletedAt  string `json:"completed_at,omitempty"`
+
 	SrcFileURL    string `json:"src_file_url,omitempty"`
 	TargetFileURL string `json:"target_file_url,omitempty"`
 	Transpose     int    `json:"transpose"`
-	EnqueuedAt    string `json:"enqueued_at,omitempty"`
-	CompletedAt   string `json:"completed_at,omitempty"`
 
 	// @Deprecated
 	TaskID     string `json:"task_id,omitempty"`
@@ -49,24 +52,31 @@ func NewFromTaskInfo(info *asynq.TaskInfo) (*Inference, error) {
 		return nil, err
 	}
 
-	var failedAt int64 = 0
+	var failedAt time.Time
 	if info.LastFailedAt.UnixMilli() > 0 {
-		failedAt = info.LastFailedAt.UnixMilli()
+		failedAt = time.UnixMilli(info.LastFailedAt.UnixMilli())
 	}
+
 	return &Inference{
-		TaskID:       info.ID,
-		TaskStatus:   info.State.String(),
-		Queue:        info.Queue,
+		ID:           utils.BuildInferenceKey(info.Queue, info.ID),
+		Model:        payload.Model,
 		Type:         info.Type,
+		Status:       info.State.String(),
 		MaxRetry:     info.MaxRetry,
+		Deadline:     info.Deadline.Format(time.RFC3339),
 		Retried:      info.Retried,
 		LastErr:      info.LastErr,
-		LastFailedAt: failedAt,
-		Deadline:     info.Deadline.UnixMilli(),
+		LastFailedAt: failedAt.Format(time.RFC3339),
+		EnqueuedAt:   time.UnixMilli(payload.EnqueuedAt).Format(time.RFC3339),
+		CompletedAt:  info.CompletedAt.Format(time.RFC3339),
 
 		SrcFileURL:    payload.SrcFileURL,
 		TargetFileURL: payload.TargetFileURL,
-		Model:         payload.Model,
 		Transpose:     payload.Transpose,
+
+		// @Deprecated
+		TaskID:     info.ID,
+		TaskStatus: info.State.String(),
+		Queue:      info.Queue,
 	}, nil
 }
