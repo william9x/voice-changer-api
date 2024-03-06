@@ -16,10 +16,17 @@ type ModelProperties struct {
 }
 
 type ModelData struct {
-	ID       string
-	Name     string
-	Category string
-	LogoURL  string
+	ID       string     `json:"id,omitempty"`
+	Name     string     `json:"name,omitempty"`
+	Category string     `json:"category,omitempty"`
+	LogoURL  string     `json:"logo_url,omitempty"`
+	Prompts  PromptData `json:"prompts"`
+}
+
+type PromptData struct {
+	ShortSpeech []string `json:"short_speech,omitempty"`
+	FunnyJokes  []string `json:"funny_jokes,omitempty"`
+	ShortVerse  []string `json:"short_verse,omitempty"`
 }
 
 func (t *ModelProperties) Prefix() string {

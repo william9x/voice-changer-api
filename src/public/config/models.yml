@@ -1,186 +1,552 @@
 app:
   models.data:
     - ID: trump
-      Name: Donald Trump
+      Name: Donald
       category: Politician
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/trump.png
+      prompts:
+        ShortSpeech:
+          - My fellow Americans, let me tell you, we're doing fantastic, just tremendous things. Our country is on the path to greatness like never before. We're winning bigly, folks!
+        FunnyJokes:
+          - Why did the scarecrow win an award? Because he was outstanding in his field, just like me, folks!
+        ShortVerse:
+          - Across this great land, from sea to shining sea, We'll make America great, just wait and see. With strength and resolve, we'll rise above, Together we'll conquer, with faith and love.
     - ID: elon_musk
-      Name: Elon Musk
+      Name: Elon
       category: Billionaire
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/elon_musk.png
+      prompts:
+        ShortSpeech:
+          - Ladies and gentlemen, we're on the brink of incredible advancements. Our journey to the stars has just begun. Together, we'll push the boundaries of what's possible, reaching new heights and exploring the unknown.
+        FunnyJokes:
+          - Why don't scientists trust atoms? Because they make up everything, except for dark matter, but don't worry, we'll get there too!
+        ShortVerse:
+          - Among the stars, our dreams take flight, Innovation drives us through the night. With rockets roaring, we aim for Mars, Together we'll reach beyond the stars.
     - ID: taylor_swift
-      Name: Taylor Swift
+      Name: Taylor
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/taylor_swift.png
+      prompts:
+        ShortSpeech:
+          - Hello, beautiful souls, it's Taylor Swift! Today, let's sprinkle kindness like glitter and make someone's day sparkle. Remember, your voice matters and your kindness can change the world.
+        FunnyJokes:
+          - Why was the music note always so happy? Because it had perfect pitch! But watch out for those sharp turns!
+        ShortVerse:
+          - In life's melody, we find our groove, With every beat, we dare to move. In the harmony of love, we sing and sway, Together we'll dance, every single day.
     - ID: obama
-      Name: Barack Obama
+      Name: Obama
       category: Presidence
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/obama.png
+      prompts:
+        ShortSpeech:
+          - My fellow Americans, change doesn't come from Washington—it comes to Washington. So let's roll up our sleeves, get to work, and make this country even greater.
+        FunnyJokes:
+          - Why was the math book sad? Because it had too many problems—just like Congress!
+        ShortVerse:
+          - In the land of the free, we find our voice, Together we stand, we make the choice. With hope in our hearts, and strength in our stride, We'll build a better future, side by side.
     - ID: jung_kook
-      Name: Jung Kook
+      Name: Jungkook
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/jung_kook.png
+      prompts:
+        ShortSpeech:
+          - Hello, lovely people, it's Jungkook! Today, let's sprinkle some joy and positivity wherever we go. Remember, your smile can brighten someone's day more than you know.
+        FunnyJokes:
+          - Why did the music note go to school? It wanted to be a sharp student! But it kept getting detention for being too flat!
+        ShortVerse:
+          - In life's symphony, we find our beat, Each note a journey, making life sweet. With love as our melody, we'll sing and play, Together we'll dance, come what may.
     - ID: charlie_puth
-      Name: Charlie Puth
+      Name: Charlie
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/charlie_puth.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's Charlie! Let's make some magic together. Music has the power to heal and unite us all. So let's spread love and good vibes wherever we go!
+        FunnyJokes:
+          - Why did the music stand go to therapy? Because it had too many rests and couldn't find its beat!
+        ShortVerse:
+          - In the melody of life, we find our song, With every chord, we carry on strong. In the rhythm of love, we dance and play, Together we'll sway, come what may.
     - ID: doja_cat
-      Name: Doja Cat
+      Name: Doja
       category: Rapper
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/doja_cat.png
+      prompts:
+        ShortSpeech:
+          - Hey y'all, it's Doja Cat! Let's vibe and spread some good energy today. Music is the key to our souls, so let's groove together and make memories that last a lifetime!
+        FunnyJokes:
+          - Why did the tomato turn red? Because it saw the salad dressing! Just like me when I see a fire beat—I'm ready to sauce it up!
+        ShortVerse:
+          - In the rhythm of life, we find our flow, With every beat, we let it all go. In the melody of love, we sing and sway, Together we'll groove, day by day.
     - ID: justin_bieber
-      Name: Justin Bieber
+      Name: Justin
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/justin_bieber.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's JB! Let's spread some love and positivity today. Remember, we're all in this together. Keep believing and never say never!
+        FunnyJokes:
+          - Why don't scientists trust atoms? Because they make up everything, just like my fans—I couldn't do it without you guys!
+        ShortVerse:
+          - In the beat of the moment, we find our groove, With every note, we rise and move. In the melody of life, we sing and soar, Together we'll conquer, forevermore.
     - ID: biden
-      Name: Joe Biden
+      Name: Biden
       category: Politician
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/biden.png
+      prompts:
+        ShortSpeech:
+          - Hello America, it's Joe. Let's come together, heal, and build back better. We've got challenges ahead, but with unity and  determination, we'll overcome anything.
+        FunnyJokes:
+          - Why did the bicycle fall over? Because it was two-tired, just like some of my opponents after a long day on the campaign trail
+        ShortVerse:
+          - In the heart of the nation, we find our strength, With every step, we go to great lengths. In the spirit of unity, we stand tall, Together we'll rise, and never fall.
     - ID: wrld_juice
-      Name: Juice WRLD
+      Name: WRLD
       category: Rapper
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/wrld_juice.png
+      prompts:
+        ShortSpeech:
+          - Hey, it's Juice WRLD! Let's keep spreading love and positivity today. Remember, you're not alone in this world. Keep chasing your dreams and making them a reality!
+        FunnyJokes:
+          - Why did the music note go to school? Because it wanted to be sharp! But don't worry, we'll always be on the same wavelength.
+        ShortVerse:
+          - In the rhythm of life, we find our beat, With every verse, our souls we greet. In the melody of dreams, we find our flow, Together we'll rise, and let it show.
     - ID: patrick_star
-      Name: Patrick Star
+      Name: Patrick
       category: Fiction Character
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/patrick_star.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's Patrick Star! Let's embrace the joy of simplicity and make today the best day ever! Remember, life is better under the sea! Woo-hoo!
+        FunnyJokes:
+          - Why was the math book sad? Because it had too many problems! But don't worry, I gave it some starfish kisses and now it's all better!
+        ShortVerse:
+          - In Bikini Bottom, under the sea, We laugh and dance, happy and free. With friends like SpongeBob, life's a delight, Together we'll soar, day and night!
     - ID: katy_perry
-      Name: Katy Perry
+      Name: Katy
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/katy_perry.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's Katy! Let's spread some love and joy today. Remember, you're all fireworks, so shine bright and be your amazing selves. Thanks for being here, you're all my firework!
+        FunnyJokes:
+          - Why did the music teacher go to jail? Because she got caught with the scales! But don't worry, she's gonna sing her way outta there!
+        ShortVerse:
+          - Amidst the noise, our voices rise, In harmony, we reach the skies. With every note, we light the way, Together we'll shine, come what may.
     - ID: jay_z
-      Name: Jay Z
+      Name: JayZ
       category: Rapper
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/jay_z.png
+      prompts:
+        ShortSpeech:
+          - Yo, what up world? It's your boy Jay-Z. Let's hustle hard and chase our dreams. Remember, we came from nothing and now we're here. Keep grinding, keep shining, and let's run the world together.
+        FunnyJokes:
+          - Why did the music note go to jail? Because it was caught in a rap battle! But don't worry, it'll be out on good behavior.
+        ShortVerse:
+          - In the streets of life, we hustle and grind, With every beat, we leave the past behind. In the rhythm of dreams, we rise and strive, Together we'll conquer, we'll thrive.
     - ID: dua_lipa
-      Name: Dua Lipa
+      Name: Dua
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/dua_lipa.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's Dua Lipa! Let's dance, have fun, and spread some good vibes. Remember, you're all superstars, so shine bright and live your best life!
+        FunnyJokes:
+          - Why did the music note go to the doctor? Because it had a major chord! But don't worry, it'll be back to singing hits in no time.
+        ShortVerse:
+          - Underneath the stars, we find our rhythm, In every beat, we feel the system. With hearts aligned and dreams in sight, Together we'll dance, through the night.
     - ID: bts_jimin
-      Name: Jimin (from BTS)
+      Name: Jimin
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/bts_jimin.png
+      prompts:
+        ShortSpeech:
+          - Hello ARMY, it's Jimin! Let's spread love and positivity today. Remember, you're all beautiful just the way you are.
+        FunnyJokes:
+          - Why did the music note go to school? Because it wanted to be sharp! But don't worry, we'll always be in tune together.
+        ShortVerse:
+          - In the dance of life, we find our flow, With every step, we let it all go. In the melody of love, we sing and sway, Together we'll groove, day by day.
     - ID: homer_simpson
-      Name: Homer Simpson
+      Name: Homer
       category: Character
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/homer_simpson.png
+      prompts:
+        ShortSpeech:
+          - D'oh! Hey everyone, it's Homer! Let's enjoy some donuts and beer today. Remember, life is short, so let's laugh and have a good time. Woo-hoo!
+        FunnyJokes:
+          - Why did the donut go to the dentist? Because it needed a chocolate filling! Just like me after a long day at the nuclear plant!
+        ShortVerse:
+          - In the land of Springfield, where the sun sets low, We eat donuts and laugh, it's our favorite show. With every D'oh and every beer, Together we'll have no fear.
     - ID: the_weeknd
-      Name: The Weeknd
+      Name: Weeknd
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/the_weeknd.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's The Weeknd! Let's vibe and feel the music today. Remember, we're all stars shining in the dark. Keep spreading love and positivity!
+        FunnyJokes:
+          - Why was the music note so stressed? Because it had too many beats to keep up with! But don't worry, we'll slow it down and enjoy the rhythm together.
+        ShortVerse:
+          - In the night's embrace, we find our soul, With every beat, we lose control. In the melody of dreams, we soar and fly, Together we'll dance, until the sunrise.
     - ID: lady_gaga
-      Name: Lady Gaga
+      Name: Gaga
       category: Actress
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/lady_gaga.png
+      prompts:
+        ShortSpeech:
+          - Hey little monsters, it's Gaga! Let's embrace our uniqueness and spread kindness today. Remember, you were born this way, and that's beautiful. Keep shining bright, my loves!
+        FunnyJokes:
+          - Why did the music note go to jail? Because it got caught in a bad chord! But don't worry, we'll break free and hit the high notes together.
+        ShortVerse:
+          - Amidst the chaos, we find our groove, With every chord, our spirits move. In the melody of life, we find our voice, Together we'll triumph, and rejoice.
     - ID: nicki_minaj
-      Name: Nicki Minaj
+      Name: Minaj
       category: Rapper
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/nicki_minaj.png
+      prompts:
+        ShortSpeech:
+          - Hey Barbz, it's Nicki! Let's slay and conquer today. Remember, you're fierce and fabulous just the way you are. Keep leveling up and living your best life!
+        FunnyJokes:
+          - Why did the music note go to the bank? Because it wanted to make a deposit! But don't worry, it was just trying to cash in on those sick beats!
+        ShortVerse:
+          - Amidst the chaos of life's crazy ride, We find our rhythm, we won't be denied. With every beat, we pave our own way, Together we'll thrive, come what may.
     - ID: blackpink_jennie
-      Name: Jennie Kim
+      Name: Jennie
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/blackpink_jennie.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's Jennie from Black Pink! Let's spread some love and joy today. Remember, your smile can light up the world. Blackpink in your area!
+        FunnyJokes:
+          - Why did the music note go to school? It wanted to be sharp! But don't worry, it's already a natural-born hitmaker!
+        ShortVerse:
+          - In life's melody, we find our groove, With every beat, we dare to move. In love's rhythm, we sing and sway, Together we'll dance, every single day.
     - ID: redvelvet_irene
       Name: Irene
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/redvelvet_irene.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's Irene! Let's spread some joy and positivity today. Remember, every smile you share brightens someone's day.
+        FunnyJokes:
+          - Why did the music note go to the doctor? Because it had a sharp pain! But don't worry, it's on the road to recovery, hitting all the right notes!
+        ShortVerse:
+          - With every beat, our spirits ignite, In the rhythm of dreams, we take flight. In the song of life, we find our way, Together we'll thrive, come what may.
     - ID: bad_bunny
-      Name: Bad Bunny
+      Name: Bunny
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/bad_bunny.png
+      prompts:
+        ShortSpeech:
+          - ¡Hola, mi gente! It's Bad Bunny! Let's spread some alegría and buena vibra today. Remember, siempre es importante ser auténtico y seguir tus sueños.
+        FunnyJokes:
+          - Why did the reggaetonero go to the party? ¡Porque quería perrear hasta abajo! But don't worry, we'll bailar hasta el amanecer and have a blast!
+        ShortVerse:
+          - En el ritmo del barrio, encontramos la pasión, Con cada nota, expresamos emoción. En el flow del corazón, encontramos la verdad, Juntos vamos a brillar, noche y día.
     - ID: elton_john
-      Name: Elton John
+      Name: Elton
       category: Composer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/elton_john.png
+      prompts:
+        ShortSpeech:
+          - Hello, everyone, it's Elton John! Let's celebrate the magic of music today. Remember, it has the power to unite us all. Keep spreading love and joy wherever you go!
+        FunnyJokes:
+          - Why did the piano break up with the accordion? Because it found the relationship too 'key' to handle! But don't worry, they'll work it out with a little harmony!
+        ShortVerse:
+          - In the melody of life, we find our soul, With every chord, we reach our goal. In the harmony of love, we sing and sway, Together we'll shine, come what may.
     - ID: harry_styles
-      Name: Harry Styles
+      Name: Harry
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/harry_styles.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's Harry Styles! Let's spread some love and kindness today. Remember, you're all beautiful just the way you are. Keep being fabulous, and let's make some memories together!
+        FunnyJokes:
+          - Why did the mushroom go to the party? Because he was a fun-gi! But don't worry, he didn't cause any spore behavior!
+        ShortVerse:
+          - In the rhythm of life, we find our beat, With every step, we feel the heat. In the melody of love, we sing and sway, Together we'll dance, every single day.
     - ID: troye_sivan
-      Name: Troye Sivan
+      Name: Sivan
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/troye_sivan.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's Troye Sivan! Let's spread some love and positivity today. Remember, you're all worthy of love and happiness just as you are.
+        FunnyJokes:
+          - Why don't scientists trust atoms? Because they make up everything, just like my skincare routine! But don't worry, I'm still glowing!
+        ShortVerse:
+          - In the melody of life, we find our tune, With every note, we break free from the cocoon. In the harmony of love, we sing and sway, Together we'll dance, come what may.
     - ID: britney_spears
-      Name: Britney Spears
+      Name: Britney
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/britney_spears.png
+      prompts:
+        ShortSpeech:
+          - Hey y'all, it's Britney Spears! Let's spread some love and positivity today. Remember, you're stronger than yesterday and you've got the power to make it through anything.
+        FunnyJokes:
+          - Why did the tomato turn red? Because it saw the salad dressing! Just like me when I see a cute outfit—I'm ready to slay!
+        ShortVerse:
+          - On the stage of life, we take our stance, With every lyric, we embrace the dance. In the rhythm of love, we sing and play, Together we'll shine, day by day.
     - ID: bruno_mars
-      Name: Bruno Mars
+      Name: Bruno
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/bruno_mars.png
+      prompts:
+        ShortSpeech:
+          - Aloha, it's Bruno Mars! Let's spread some love and joy today. Remember, you're amazing just the way you are. Keep grooving and making memories!
+        FunnyJokes:
+          - Why don't pianists ever get lost? Because they always find their way Bach!
+        ShortVerse:
+          - In the rhythm of life, we find our flow, With every beat, we let it show. In the melody of love, we sing and sway, Together we'll dance, every single day.
     - ID: chris_brown
-      Name: Chris Brown
+      Name: Chris
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/chris_brown.png
+      prompts:
+        ShortSpeech:
+          - Hey, it's Chris Brown! Let's spread some love and positivity today. Remember, you're all stars shining bright. Keep dancing and living your best life!
+        FunnyJokes:
+          - Why did the music note go to jail? Bad rap! But it's dropping beats behind bars!
+        ShortVerse:
+          - With every beat, we find our groove, In the melody of love, we make our move.
     - ID: blackpink_jiso
-      Name: Jiso
+      Name: Jisoo
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/blackpink_jiso.png
+      prompts:
+        ShortSpeech:
+          - Hello BLINK, it's Jisoo! Today, let's sprinkle kindness like confetti. Remember, your positivity can change someone's world. Keep shining bright!
+        FunnyJokes:
+          - Why did the music note go to the party? It heard there was a great beat! But it ended up getting in treble for dancing too off-key!
+        ShortVerse:
+          - Amidst life's chaos, we find our tune, With every chord, our dreams commune. In love's harmony, we find our grace, Together we'll dance, in every embrace.
     - ID: rosalia
       Name: Rosalia
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/rosalia.png
+      prompts:
+        ShortSpeech:
+          - ¡Hola a todos! It's Rosalía. Hoy, vamos a llenar el mundo con amor y alegría. Recuerden, cada uno de ustedes es único y especial. ¡Sigamos brillando juntos!
+        FunnyJokes:
+          - Why did the music note break up with the piano? It couldn't handle the commitment! But don't worry, it's still single and ready to mingle!
+        ShortVerse:
+          - En la melodía de la vida, encontramos nuestro ritmo, Con cada compás, dejamos un eco. En el arpegio del amor, cantamos y bailamos, Juntos vamos a brillar, en todos los tramos.
     - ID: bilie_eilish
-      Name: Bilie Eilish
+      Name: Bilie
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/bilie_eilish.png
+      prompts:
+        ShortSpeech:
+          - Hey, it's Billie Eilish! Today, let's embrace our uniqueness and spread some good vibes. Remember, it's okay to be different. Let's rock our quirks and make the world a cooler place!
+        FunnyJokes:
+          - Why did the music note go to jail? It got caught in a bad rap! But don't worry, it's already working on its next hit single!
+        ShortVerse:
+          - In life's melody, we find our sound, With every beat, we hold our ground. In the harmony of dreams, we sing and sway, Together we'll conquer, come what may.
     - ID: ariana_grande
       Name: Ariana
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/ariana_grande.png
+      prompts:
+        ShortSpeech:
+          - Hey loves, it's Ariana! Let's spread some love and positivity today. Remember, you're all queens and kings. Keep shining bright and slaying the day!
+        FunnyJokes:
+          - Why did the music note go to the party? It heard they had a great beat! But watch out, it might get too sharp!
+        ShortVerse:
+          - Through life's song, we find our way, With every note, we seize the day. In love's embrace, we rise above, Together we'll conquer, with hearts full of love.
     - ID: olivia_rodrigo
       Name: Olivia
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/olivia_rodrigo.png
+      prompts:
+        ShortSpeech:
+          - Hey, it's Olivia! Let's vibe with our emotions and spread some positivity. Remember, it's cool to feel it all. Let's make some magic together!
+        FunnyJokes:
+          - Why did the music note break up with the trumpet? It couldn't handle the brassiness! But don't worry, it's still hitting the high notes solo!
+        ShortVerse:
+          - Amid life's chaos, we find our rhyme, With every verse, we conquer time. In the symphony of dreams, we play, Together we'll thrive, come what may.
     - ID: rihanna
       Name: Rihanna
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/rihanna.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's Rihanna! Today, let's spread some love and positivity. Remember, you're all diamonds, shining bright. Keep slaying and living your best life!
+        FunnyJokes:
+          - Why did the music note go to the gym? It wanted to get in tune! But watch out, it might hit some flat notes on the treadmill!
+        ShortVerse:
+          - Under the moon's glow, we find our sway, With every note, we seize the day. In the melody of dreams, we rise, Together we'll soar, towards the skies.
     - ID: starrail_seele
       Name: Seele
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/starrail_seele.png
+      prompts:
+        ShortSpeech:
+          - Kon'nichiwa! Seele Japanese here, ready to spread some laughter and positivity your way. Let's embark on this journey together, shall we?
+        FunnyJokes:
+          - Why did the sushi blush? Because it saw the seaweed!
+        ShortVerse:
+          - Beneath the cherry blossoms, laughter blooms, With joy in our hearts, our spirits zoom. In the land of the rising sun, we find delight, Together we'll shine, oh what a sight!
     - ID: snsd_taeyeon
       Name: Taeyeon
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/snsd_taeyeon.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, Taeyeon here! Let's make today amazing. Your light shines brighter than any star. Let's spread love like confetti!
+        FunnyJokes:
+          - Why did the music note go to the doctor? It had a major chord! But don't worry, it's resting up for the next big performance!
+        ShortVerse:
+          - Amidst life's melody, we find our song, With every harmony, we dance along. In love's sweet refrain, we find our way, Together we'll journey, day by day.
     - ID: bts_jhope
       Name: Jhope
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/bts_jhope.png
+      prompts:
+        ShortSpeech:
+          - Hey there, ARMY! It's your hope, J-Hope! Today, let's sprinkle some happiness and positivity everywhere we go. Remember, your smile can light up the darkest of days.
+        FunnyJokes:
+          - Why did the music note go to the gym? It wanted to get some 'tone'! But it ended up just getting 'flat' on the treadmill!
+        ShortVerse:
+          - In life's rhythm, we find our beat, With every step, we move our feet. In love's melody, we sing and sway, Together we'll dance, every single day.
     - ID: bts_suga
       Name: SUGA
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/bts_suga.png
+      prompts:
+        ShortSpeech:
+          - Hey everyone, it's SUGA! Let's keep it real and spread some love today. Remember, your passion fuels your greatness. Keep chasing your dreams and never give up!
+        FunnyJokes:
+          - Why did the music note go to the doctor? It had treble makers! But don't worry, it's resting up for the next big hit!
+        ShortVerse:
+          - Through life's melody, we find our way, With every chord, we seize the day. In love's harmony, we sing and play, Together we'll dance, come what may.
     - ID: starrail_7th
       Name: 7th
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/starrail_7th.png
+      prompts:
+        ShortSpeech:
+          - Hello everyone, it's March 7th! Let's make today extraordinary. Remember, every moment is a gift. Let's fill it with joy and gratitude!
+        FunnyJokes:
+          - Why don't we ever tell secrets on March 7th? Because they're always March 8th! But hey, don't worry, your secrets are safe with me!
+        ShortVerse:
+          - On March 7th, we dance with glee, Underneath the stars, wild and free. In the rhythm of life, we find our way, Marching forward, come what may.
     - ID: bts_taehyung
       Name: Taehyung
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/bts_taehyung.png
+      prompts:
+        ShortSpeech:
+          - Hello, beautiful souls! It's Kim Taehyung! Let's make today magical. Remember, your uniqueness is your superpower.
+        FunnyJokes:
+          - Why did the music note go to the party alone? It couldn't find its 'chord'-mate! But don't worry, it ended up making sweet music with the DJ!
+        ShortVerse:
+          - In the tapestry of time, we find our thread, With every note, our story is said. In the symphony of dreams, we sing and soar, Together we'll dance, forevermore.
     - ID: jack_black
       Name: Jack
       category: Actor
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/jack_black.png
+      prompts:
+        ShortSpeech:
+          - Hey, party people! It's Jack Black! Let's rock this moment with some serious vibes. Remember, life's a jam session, so crank up the volume and let's make some noise!
+        FunnyJokes:
+          - Why don't skeletons fight each other? They don't have the guts! But don't worry, they're too busy jamming out to 'Bone Jovi'!
+        ShortVerse:
+          - In the rhythm of life, we find our beat, With every strum, our souls feel complete. In the symphony of joy, we sing and play, Together we'll dance, every single day.
     - ID: quasimoto
       Name: Quasimoto
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/quasimoto.png
+      prompts:
+        ShortSpeech:
+          - Yo, it's Quasimoto! Let's dive deep into the groove and ride the wave of funky vibes. Remember, the beat is where it's at.
+        FunnyJokes:
+          - Why did the vinyl record go to therapy? It had too many scratches on its soul! But don't worry, after a few spins, it found its rhythm again!
+        ShortVerse:
+          - Through life's symphony, we find our dance, With each note, we take our chance. In the rhythm of dreams, we sing and sway, Together we'll move, night and day.
     - ID: post_malone
       Name: Malone
       category: Singer
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/post_malone.png
+      prompts:
+        ShortSpeech:
+          - Yo, it's Post Malone! Let's make today legendary with good vibes and even better music. Remember, you're the DJ of your own life. Let's drop some beats!
+        FunnyJokes:
+          - Why did the music note go to jail? It was caught in a 'sharp' robbery! But don't worry, it made bail with some smooth jazz.
+        ShortVerse:
+          - In the rhythm of life, we find our groove, With every beat, we make our move. In the melody of dreams, we sing and sway, Together we'll vibe, come what may.""
     - ID: 21savage
       Name: 21Savage
       category: Singer
-
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/21savage.png
+      prompts:
+        ShortSpeech:
+          - Yo, it's 21 Savage! Let's keep it real and make today count. Remember, your hustle defines your success. Let's grind hard and secure the bag!
+        FunnyJokes:
+          - Why did the rapper carry an umbrella? For the 'sick' flows! But watch out, they might 'rain' fire on the mic!
+        ShortVerse:
+          - Through life's symphony, we find our path, With every step, we conquer the wrath. In the beat of the streets, we sing and play, Together we'll rise, come what may.
     - ID: kim_jong_un
       Name: Kim
       category: Politician
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/kim_jong_un.png
+      prompts:
+        ShortSpeech:
+          - Hello guys, my name is Kim Jong Un!
+        FunnyJokes:
+          - I never tell jokes guys!
+        ShortVerse:
+          - None of verse for me to say, too!
     - ID: putin
       Name: Putin
       category: Politician
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/putin.png
+      prompts:
+        ShortSpeech:
+          - Hello guys, my name is Vladimir Putin !
+        FunnyJokes:
+          - Jokes never comes to me!
+        ShortVerse:
+          - I want to say more about the politics, not verse!
     - ID: mickey_mouse
       Name: Mickey
       category: Fictional Character
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/mickey_mouse.png
+      prompts:
+        ShortSpeech:
+          - Hiya pals! It's me, Mickey Mouse! I just wanted to say, always remember to follow your dreams and spread a little kindness wherever you go. Gosh, isn't it swell to be surrounded by friends like you?
+        FunnyJokes:
+          - Why did Mickey Mouse go to space? Because he wanted to find Pluto!
+        ShortVerse:
+          - In a world of laughter and fun, With friends by my side, second to none. We'll dance and sing, oh what a sight, Together we'll make magic, morning 'til night!
     - ID: batman
       Name: Batman
       category: Fictional Character
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/batman.png
+      prompts:
+        ShortSpeech:
+          - Ladies and gentlemen, citizens of Gotham, and friends alike, I stand before you as a symbol of hope and justice. In the darkest of nights, I vow to protect this city from the shadows that lurk within.
+        FunnyJokes:
+          - Why did Batman and Robin never play hide and seek? Because Robin always wanted to be found in a 'Bat'-minute!
+        ShortVerse:
+          - In the shadows I silently tread, With justice as my guide, I'm led. A symbol of strength, I take flight, Protecting Gotham, day and night.
     - ID: messi
       Name: Messi
       category: Athlete
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/messi.png
+      prompts:
+        ShortSpeech:
+          - Thank you all for your unwavering support. It's an honor to play the game I love. Let's keep making memories together on the field!
+        FunnyJokes:
+          - Why did Lionel Messi bring string to the soccer game? Because he wanted to tie the score!
+        ShortVerse:
+          - On the field, where dreams take flight, With every goal, a shining light. In the game I love, I give my all, For every fan, big and small.
     - ID: godzilla
       Name: Godzilla
       category: Fictional Character
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      logoURL: https://storage.bralyvn.com/voice-changer-dev/assets/models/godzilla.png
+      prompts:
+        ShortSpeech:
+          - Roar! I'm ready to fight now!
+        FunnyJokes:
+          - Why did Godzilla bring a suitcase to the beach? Because he wanted to catch some 'rays'!
+        ShortVerse:
+          - From the depths I rise, mighty and strong, In my wake, the world sings my song.
