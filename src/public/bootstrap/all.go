@@ -13,6 +13,7 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-public/properties"
 	"github.com/Braly-Ltd/voice-changer-api-public/routers"
 	"github.com/Braly-Ltd/voice-changer-api-public/services"
+	"github.com/Braly-Ltd/voice-changer-api-public/validators"
 	"github.com/golibs-starter/golib"
 	golibgin "github.com/golibs-starter/golib-gin"
 	"github.com/golibs-starter/golib/log"
@@ -66,7 +67,7 @@ func All() fx.Option {
 		// actuator endpoints and application routers
 		GinHttpServerOpt(),
 		fx.Invoke(routers.RegisterGinRouters),
-		fx.Invoke(middlewares.RegisterFormValidators),
+		fx.Invoke(validators.RegisterFormValidators),
 
 		// Graceful shutdown.
 		// OnStop hooks will run in reverse order.
@@ -78,6 +79,7 @@ func GinHttpServerOpt() fx.Option {
 	return fx.Options(
 		fx.Provide(golibgin.NewGinEngine),
 		fx.Provide(golibgin.NewHTTPServer),
+		fx.Invoke(RegisterMiddlewares),
 		fx.Invoke(golibgin.RegisterHandlers),
 		fx.Invoke(OnStartHttpsServerHook),
 	)
@@ -103,4 +105,10 @@ func OnStartHttpsServerHook(lc fx.Lifecycle, app *golib.App, httpServer *http.Se
 			return nil
 		},
 	})
+}
+
+func RegisterMiddlewares(app *golib.App) {
+	app.AddHandler(
+		middlewares.AddCustomHeaders(),
+	)
 }

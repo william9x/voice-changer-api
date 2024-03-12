@@ -24,10 +24,10 @@ api:
 		. && \
 		docker push namnam206/voice-changer-api:latest
 
-worker:
+build_prod:
 	docker build \
-		-t namnam206/voice-changer-worker:latest \
-		--build-arg="BUILD_MODULE=worker" \
+		-t namnam206/vca-api:1.0.0 \
+		--build-arg="BUILD_MODULE=public" \
 		-f ./docker/Dockerfile \
 		. && \
-		docker push namnam206/voice-changer-worker:latest
+		docker push namnam206/vca-api:1.0.0
