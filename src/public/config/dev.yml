@@ -8,7 +8,7 @@ app:
     AuthenticationEnable: false
   firebase:
     CredentialsFileAndroid: "/home/ssl/vca-firebase-service-account.json"
-    CredentialsFileIOS: "/home/ssl/vca-ios-firebase-service-account.json"
+    CredentialsFileIOS: "/home/ssl/vca-firebase-service-account.json"
   logging:
     development: true
   swagger.enabled: true
