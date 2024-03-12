@@ -10,7 +10,7 @@ app:
     AccessKeyID: I2TCgnjRBzblw6rP50sO
     SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
     UseSSL: true
-    BucketName: vca-dev
+    BucketName: vca
   files:
     BaseInputPath: "/root/app/audio"
     BaseOutputPath: "/root/app/audio"
@@ -18,10 +18,10 @@ app:
     Endpoint: http://localhost:8080
     InferPath: /api/v1/rvc/infer
   asynq:
-    Addr: 194.233.85.239:6379
-    Password: braly@123
+    Addr: 94.72.114.19:6379
+    Password: 2V324tBa6x0joVSzza3OG
     DB: 1
     Queues:
       vc_default: 10
     Worker:
-      Concurrency: 10
+      Concurrency: 3
