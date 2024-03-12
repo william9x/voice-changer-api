@@ -36,13 +36,16 @@ func All() fx.Option {
 		golib.ProvideProps(properties.NewTLSProperties),
 		golib.ProvideProps(properties.NewModelProperties),
 		golib.ProvideProps(properties.NewInferenceProperties),
+		golib.ProvideProps(properties.NewMiddlewaresProperties),
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
+		golib.ProvideProps(adapterProps.NewFirebaseProperties),
 
 		// Provide clients
 		fx.Provide(clients.NewMinIOClient),
 		fx.Provide(clients.NewAsynqClient),
 		fx.Provide(clients.NewAsynqInspector),
+		fx.Provide(clients.NewFirebaseAuthClient),
 
 		// Provide port's implements
 		fx.Provide(fx.Annotate(
@@ -50,6 +53,9 @@ func All() fx.Option {
 		),
 		fx.Provide(fx.Annotate(
 			adapter.NewAsynqAdapter, fx.As(new(ports.TaskQueuePort))),
+		),
+		fx.Provide(fx.Annotate(
+			adapter.NewFirebaseAdapter, fx.As(new(ports.AuthenticationPort))),
 		),
 
 		// Provide use cases

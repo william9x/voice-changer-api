@@ -1,8 +1,10 @@
 package routers
 
 import (
+	"github.com/Braly-Ltd/voice-changer-api-core/ports"
 	"github.com/Braly-Ltd/voice-changer-api-public/controllers"
 	"github.com/Braly-Ltd/voice-changer-api-public/docs"
+	"github.com/Braly-Ltd/voice-changer-api-public/middlewares"
 	"github.com/Braly-Ltd/voice-changer-api-public/properties"
 	"github.com/gin-gonic/gin"
 	"github.com/golibs-starter/golib"
@@ -14,13 +16,16 @@ import (
 
 type RegisterRoutersIn struct {
 	fx.In
-	App          *golib.App
-	Engine       *gin.Engine
-	SwaggerProps *properties.SwaggerProperties
+	App                   *golib.App
+	Engine                *gin.Engine
+	SwaggerProps          *properties.SwaggerProperties
+	MiddlewaresProperties *properties.MiddlewaresProperties
 
 	Actuator            *actuator.Endpoint
 	InferenceController *controllers.InferenceController
 	ModelController     *controllers.ModelController
+
+	AuthenticationPort ports.AuthenticationPort
 }
 
 func RegisterGinRouters(p RegisterRoutersIn) {
@@ -34,6 +39,7 @@ func RegisterGinRouters(p RegisterRoutersIn) {
 	}
 
 	apiGroup := group.Group("/api")
+	apiGroup.Use(middlewares.Authenticate(p.AuthenticationPort, p.MiddlewaresProperties))
 
 	// Model APIs
 	apiGroup.GET("/v1/models", p.ModelController.GetModels)
