@@ -26,8 +26,8 @@ api:
 
 build_prod:
 	docker build \
-		-t namnam206/vca-api:1.0.0 \
+		-t namnam206/vca-api:1.1.0 \
 		--build-arg="BUILD_MODULE=public" \
 		-f ./docker/Dockerfile \
 		. && \
-		docker push namnam206/vca-api:1.0.0
+		docker push namnam206/vca-api:1.1.0

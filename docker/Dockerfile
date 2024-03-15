@@ -9,7 +9,8 @@ RUN apk add --no-cache git
 RUN apk add --no-cache ca-certificates && update-ca-certificates
 COPY ./src /go/src
 WORKDIR /go/src/$BUILD_MODULE
-RUN env APP_PROFILES=dev GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./binary \
+# export GOOS=linux GOARCH=amd64 CGO_ENABLED=0 APP_PROFILES=prod
+RUN env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./binary \
     -ldflags="-X '$BS_PKG.Version=$BUILD_VERSION' -X '$BS_PKG.CommitHash=$BUILD_COMMIT_HASH' -X '$BS_PKG.BuildTime=$BUILD_TIME'"
 
 FROM scratch
