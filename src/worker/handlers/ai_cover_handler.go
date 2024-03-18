@@ -52,30 +52,30 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		return err
 	}
 
-	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
+	//localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 
-	audios, err := r.inferencePort.SeperateAudio(ctx, entities.SeparateAudioCommand{
+	_, err := r.inferencePort.SeperateAudio(ctx, entities.SeparateAudioCommand{
 		InputPath: localSourcePath,
 	})
 	if err != nil {
 		return err
 	}
 
-	if err := r.inferencePort.CreateInference(ctx, entities.InferenceCommand{
-		ModelPath: fmt.Sprintf("%s.pth", vcPayload.Model),
-		IndexPath: fmt.Sprintf("%s.index", vcPayload.Model),
-		InputPath: audios.VocalPath,
-		OutPath:   localTargetPath,
-		Transpose: vcPayload.Transpose,
-	}); err != nil {
-		return err
-	}
-
-	log.Infoc(ctx, "task %s inference completed, start uploading file at %s", task.Type(), vcPayload.TargetFileName)
-	if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, vcPayload.TargetFileName); err != nil {
-		log.Errorf("upload file error: %v", err)
-		return err
-	}
+	//if err := r.inferencePort.CreateInference(ctx, entities.InferenceCommand{
+	//	ModelPath: fmt.Sprintf("%s.pth", vcPayload.Model),
+	//	IndexPath: fmt.Sprintf("%s.index", vcPayload.Model),
+	//	InputPath: audios.VocalPath,
+	//	OutPath:   localTargetPath,
+	//	Transpose: vcPayload.Transpose,
+	//}); err != nil {
+	//	return err
+	//}
+	//
+	//log.Infoc(ctx, "task %s inference completed, start uploading file at %s", task.Type(), vcPayload.TargetFileName)
+	//if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, vcPayload.TargetFileName); err != nil {
+	//	log.Errorf("upload file error: %v", err)
+	//	return err
+	//}
 
 	log.Infoc(ctx, "task %s is done", task.Type())
 	return nil
