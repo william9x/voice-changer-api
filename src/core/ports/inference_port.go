@@ -7,4 +7,5 @@ import (
 
 type InferencePort interface {
 	CreateInference(ctx context.Context, cmd entities.InferenceCommand) error
+	SeperateAudio(ctx context.Context, cmd entities.SeparateAudioCommand) (entities.SeparateAudioResponse, error)
 }

@@ -43,6 +43,7 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	if err := msgpack.Unmarshal(task.Payload(), &vcPayload); err != nil {
 		return fmt.Errorf("unpack task failed: %v", err)
 	}
+
 	log.Infoc(ctx, "task %s is processing", task.Type())
 	log.Debugc(ctx, "task payload: %+v", vcPayload)
 
@@ -53,10 +54,17 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 
 	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 
+	audios, err := r.inferencePort.SeperateAudio(ctx, entities.SeparateAudioCommand{
+		InputPath: localSourcePath,
+	})
+	if err != nil {
+		return err
+	}
+
 	if err := r.inferencePort.CreateInference(ctx, entities.InferenceCommand{
 		ModelPath: fmt.Sprintf("%s.pth", vcPayload.Model),
 		IndexPath: fmt.Sprintf("%s.index", vcPayload.Model),
-		InputPath: localSourcePath,
+		InputPath: audios.VocalPath,
 		OutPath:   localTargetPath,
 		Transpose: vcPayload.Transpose,
 	}); err != nil {

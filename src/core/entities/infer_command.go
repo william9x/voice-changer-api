@@ -7,3 +7,12 @@ type InferenceCommand struct {
 	OutPath   string `json:"output_path"`
 	Transpose int    `json:"transpose"`
 }
+
+type SeparateAudioCommand struct {
+	InputPath string `json:"input_path"`
+}
+
+type SeparateAudioResponse struct {
+	VocalPath string `json:"output_vocal_path"`
+	InstPath  string `json:"output_instrument_path"`
+}

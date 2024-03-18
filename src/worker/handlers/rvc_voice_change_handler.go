@@ -43,6 +43,7 @@ func (r *RVCVoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) er
 	if err := msgpack.Unmarshal(task.Payload(), &vcPayload); err != nil {
 		return fmt.Errorf("unpack task failed: %v", err)
 	}
+
 	log.Infoc(ctx, "task %s is processing", task.Type())
 	log.Debugc(ctx, "task payload: %+v", vcPayload)
 
