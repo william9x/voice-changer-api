@@ -50,7 +50,7 @@ func (r *RVCAdapter) SeperateAudio(ctx context.Context, cmd entities.SeparateAud
 		return entities.SeparateAudioResponse{}, err
 	}
 
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", r.props.SeperateAudioPathURL, buf)
+	httpReq, err := http.NewRequestWithContext(ctx, "POST", r.props.UVRPathURL, buf)
 	if err != nil {
 		return entities.SeparateAudioResponse{}, err
 	}

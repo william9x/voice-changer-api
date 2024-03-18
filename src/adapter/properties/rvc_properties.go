@@ -6,12 +6,12 @@ import (
 )
 
 type RVCProperties struct {
-	Endpoint          string
-	InferPath         string
-	SeperateAudioPath string
+	Endpoint  string
+	InferPath string
+	UVRPath   string
 
-	InferURL             string `default:""`
-	SeperateAudioPathURL string `default:""`
+	InferURL   string `default:""`
+	UVRPathURL string `default:""`
 }
 
 func NewRVCProperties(loader config.Loader) (*RVCProperties, error) {
@@ -26,6 +26,6 @@ func (r *RVCProperties) Prefix() string {
 
 func (r *RVCProperties) PostBinding() error {
 	r.InferURL = fmt.Sprintf("%s%s", r.Endpoint, r.InferPath)
-	r.SeperateAudioPathURL = fmt.Sprintf("%s%s", r.Endpoint, r.SeperateAudioPath)
+	r.UVRPathURL = fmt.Sprintf("%s%s", r.Endpoint, r.UVRPath)
 	return nil
 }

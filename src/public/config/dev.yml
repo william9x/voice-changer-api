@@ -18,8 +18,8 @@ app:
     AccessKeyID: I2TCgnjRBzblw6rP50sO
     SecretAccessKey: T9tKE6lCGDWBUnijwjt2V324tBa6x0joVSzza3OG
     UseSSL: true
-    BucketName: vca
+    BucketName: vca-dev
   asynq:
-    Addr: 94.72.114.19:6379
-    Password: 2V324tBa6x0joVSzza3OG
+    Addr: 194.233.85.239:6379
+    Password: braly@123
     DB: 1
