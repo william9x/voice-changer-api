@@ -15,6 +15,9 @@ type AuthClient struct {
 }
 
 func NewFirebaseAuthClient(props *properties.FirebaseProperties) (*AuthClient, error) {
+	if !props.Enabled {
+		return nil, nil
+	}
 	androidApp, err := newFirebaseApp(props.CredentialsFileAndroid)
 	if err != nil {
 		return nil, fmt.Errorf("error initializing firebase app for android: %v", err)

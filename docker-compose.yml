@@ -44,8 +44,6 @@ services:
     container_name: voice-changer-redis
     image: bitnami/redis:latest
     restart: always
-    volumes:
-      - /opt/redis/data:/bitnami/redis/data
     networks:
       - backend-private
     ports:

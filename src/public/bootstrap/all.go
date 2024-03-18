@@ -7,7 +7,6 @@ import (
 	"github.com/Braly-Ltd/voice-changer-api-adapter/clients"
 	adapterProps "github.com/Braly-Ltd/voice-changer-api-adapter/properties"
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
-	"github.com/Braly-Ltd/voice-changer-api-core/usecases"
 	"github.com/Braly-Ltd/voice-changer-api-public/controllers"
 	"github.com/Braly-Ltd/voice-changer-api-public/middlewares"
 	"github.com/Braly-Ltd/voice-changer-api-public/properties"
@@ -46,6 +45,8 @@ func All() fx.Option {
 		fx.Provide(clients.NewAsynqClient),
 		fx.Provide(clients.NewAsynqInspector),
 		fx.Provide(clients.NewFirebaseAuthClient),
+		fx.Provide(clients.NewHTTPClient),
+		fx.Provide(clients.NewYouTubeDownloaderClient),
 
 		// Provide port's implements
 		fx.Provide(fx.Annotate(
@@ -59,10 +60,8 @@ func All() fx.Option {
 		),
 
 		// Provide use cases
-		fx.Provide(fx.Annotate(
-			usecases.NewGetInferenceInfoUseCaseImpl, fx.As(new(usecases.GetInferenceInfoUseCase))),
-		),
 		fx.Provide(services.NewInferenceService),
+		fx.Provide(services.NewDownloadService),
 
 		// Provide controllers, these controllers will be used
 		// when register router was invoked

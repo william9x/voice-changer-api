@@ -5,6 +5,7 @@ import (
 )
 
 type FirebaseProperties struct {
+	Enabled                bool `default:"true"`
 	CredentialsFileAndroid string
 	CredentialsFileIOS     string
 }

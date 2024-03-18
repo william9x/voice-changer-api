@@ -5,7 +5,7 @@ app:
     CertFile: "/app/ssl/fullchain.pem"
     KeyFile: "/app/ssl/privkey.pem"
   middlewares:
-    AuthenticationEnable: true
+    AuthenticationEnabled: true
   firebase:
     CredentialsFileAndroid: "/app/ssl/vca-firebase-prod-service-account.json"
     CredentialsFileIOS: "/app/ssl/vca-firebase-prod-service-account.json"

@@ -33,17 +33,37 @@ const docTemplate = `{
                         "type": "file",
                         "description": "Source voice",
                         "name": "file",
-                        "in": "formData",
-                        "required": true
+                        "in": "formData"
+                    },
+                    {
+                        "enum": [
+                            "youtube"
+                        ],
+                        "type": "string",
+                        "default": "youtube",
+                        "description": "Source provider",
+                        "name": "source_provider",
+                        "in": "formData"
                     },
                     {
                         "type": "string",
+                        "description": "Source URL",
+                        "name": "source_url",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "default": "trump",
                         "description": "Target voice",
                         "name": "model",
                         "in": "formData",
                         "required": true
                     },
                     {
+                        "enum": [
+                            "vc:rvc",
+                            "aic"
+                        ],
                         "type": "string",
                         "default": "vc:rvc",
                         "description": "Task's type",
@@ -52,6 +72,8 @@ const docTemplate = `{
                         "required": true
                     },
                     {
+                        "maximum": 12,
+                        "minimum": -12,
                         "type": "integer",
                         "default": 0,
                         "description": "Transpose",

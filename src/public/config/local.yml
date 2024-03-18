@@ -4,6 +4,8 @@ app:
     development: true
     JsonOutputMode: false
   swagger.enabled: true
+  firebase.Enabled: false
+  middlewares.AuthenticationEnabled: false
   minio:
     Endpoint: storage.bralyvn.com
     PublicEndpoint: https://storage.bralyvn.com
@@ -12,6 +14,6 @@ app:
     UseSSL: true
     BucketName: voice-changer-dev
   asynq:
-    Addr: 194.233.85.239:6379
+    Addr: localhost:6379
     Password: braly@123
     DB: 1

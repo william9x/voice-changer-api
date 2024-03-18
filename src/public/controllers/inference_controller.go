@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"fmt"
+	"github.com/Braly-Ltd/voice-changer-api-core/constants"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
-	"github.com/Braly-Ltd/voice-changer-api-core/usecases"
 	"github.com/Braly-Ltd/voice-changer-api-core/utils"
 	"github.com/Braly-Ltd/voice-changer-api-public/properties"
 	"github.com/Braly-Ltd/voice-changer-api-public/requests"
@@ -16,23 +16,23 @@ import (
 )
 
 type InferenceController struct {
-	modelProps              *properties.ModelProperties
-	inferenceProps          *properties.InferenceProperties
-	inferenceService        *services.InferenceService
-	getInferenceInfoUseCase usecases.GetInferenceInfoUseCase
+	modelProps       *properties.ModelProperties
+	inferenceProps   *properties.InferenceProperties
+	inferenceService *services.InferenceService
+	downloadService  *services.DownloadService
 }
 
 func NewInferenceController(
 	modelProps *properties.ModelProperties,
 	inferenceProps *properties.InferenceProperties,
 	inferenceService *services.InferenceService,
-	getInferenceInfoUseCase usecases.GetInferenceInfoUseCase,
+	downloadService *services.DownloadService,
 ) *InferenceController {
 	return &InferenceController{
-		modelProps:              modelProps,
-		inferenceProps:          inferenceProps,
-		inferenceService:        inferenceService,
-		getInferenceInfoUseCase: getInferenceInfoUseCase,
+		modelProps:       modelProps,
+		inferenceProps:   inferenceProps,
+		inferenceService: inferenceService,
+		downloadService:  downloadService,
 	}
 }
 
@@ -87,10 +87,12 @@ func (c *InferenceController) GetInfer(ctx *gin.Context) {
 //	@Tags			InferenceController
 //	@Accept			multipart/form-data
 //	@Produce		json
-//	@Param			file		formData		file			true	"Source voice"
-//	@Param			model		formData		string			true	"Target voice"
-//	@Param			type		formData		string			true	"Task's type" default(vc:rvc)
-//	@Param			transpose	formData		int				false	"Transpose" default(0)
+//	@Param			file				formData		file			false	"Source voice"
+//	@Param			source_provider		formData		string			false	"Source provider" default(youtube) Enums(youtube)
+//	@Param			source_url			formData		string			false	"Source URL"
+//	@Param			model				formData		string			true	"Target voice" default(trump)
+//	@Param			type				formData		string			true	"Task's type" default(vc:rvc) Enums(vc:rvc, aic)
+//	@Param			transpose			formData		int				false	"Transpose" default(0) minimum(-12) maximum(12)
 //	@Success		201		{object}	response.Response{data=resources.CreateInference}
 //	@Failure		400		{object}	response.Response
 //	@Failure		500		{object}	response.Response
@@ -107,18 +109,41 @@ func (c *InferenceController) CreateInfer(ctx *gin.Context) {
 		return
 	}
 
-	file, err := entities.NewFile(req.RawFile)
-	if err != nil {
-		response.WriteError(ctx.Writer, exception.New(40000, "RawFile invalid"))
-		return
-	}
-	if !utils.ContainsString(c.inferenceProps.SupportedFiles, file.Ext) {
-		msg := fmt.Sprintf("RawFile %s not supported. Supported rawFile are: %v", req.SrcFile.Ext, c.inferenceProps.SupportedFiles)
-		response.WriteError(ctx.Writer, exception.New(40000, msg))
-		return
+	if req.Type == string(constants.TaskTypeVoiceChangeRVC) {
+		if req.RawFile == nil {
+			response.WriteError(ctx.Writer, exception.New(40000, "file required"))
+			return
+		}
+
+		file, err := entities.NewFile(req.RawFile)
+		if err != nil {
+			response.WriteError(ctx.Writer, exception.New(40000, "RawFile invalid"))
+			return
+		}
+		if !utils.ContainsString(c.inferenceProps.SupportedFiles, file.Ext) {
+			msg := fmt.Sprintf("RawFile %s not supported. Supported rawFile are: %v", req.SrcFile.Ext, c.inferenceProps.SupportedFiles)
+			response.WriteError(ctx.Writer, exception.New(40000, msg))
+			return
+		}
+
+		req.SrcFile = file
 	}
 
-	req.SrcFile = file
+	if req.Type == string(constants.TaskTypeAICover) {
+		if req.SrcURL == "" {
+			response.WriteError(ctx.Writer, exception.New(40000, "source URL required"))
+			return
+		}
+
+		file, err := c.downloadService.Download(ctx, req.SrcProvider, req.SrcURL)
+		if err != nil {
+			response.WriteError(ctx.Writer, exception.New(40000, "Download file error"))
+			return
+		}
+
+		req.SrcFile = file
+	}
+
 	resp, err := c.inferenceService.CreateInference(ctx, req)
 	if err != nil {
 		log.Errorc(ctx, "%v", err)

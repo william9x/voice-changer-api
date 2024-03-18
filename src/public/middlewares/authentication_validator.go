@@ -12,7 +12,7 @@ import (
 
 func Authenticate(port ports.AuthenticationPort, props *properties.MiddlewaresProperties) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if !props.AuthenticationEnable {
+		if !props.AuthenticationEnabled {
 			c.Next()
 			return
 		}

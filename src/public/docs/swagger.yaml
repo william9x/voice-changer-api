@@ -98,15 +98,29 @@ paths:
       - description: Source voice
         in: formData
         name: file
-        required: true
         type: file
-      - description: Target voice
+      - default: youtube
+        description: Source provider
+        enum:
+        - youtube
+        in: formData
+        name: source_provider
+        type: string
+      - description: Source URL
+        in: formData
+        name: source_url
+        type: string
+      - default: trump
+        description: Target voice
         in: formData
         name: model
         required: true
         type: string
       - default: vc:rvc
         description: Task's type
+        enum:
+        - vc:rvc
+        - aic
         in: formData
         name: type
         required: true
@@ -114,6 +128,8 @@ paths:
       - default: 0
         description: Transpose
         in: formData
+        maximum: 12
+        minimum: -12
         name: transpose
         type: integer
       produces:

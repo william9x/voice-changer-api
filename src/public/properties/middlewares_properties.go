@@ -11,7 +11,7 @@ func NewMiddlewaresProperties(loader config.Loader) (*MiddlewaresProperties, err
 }
 
 type MiddlewaresProperties struct {
-	AuthenticationEnable bool `default:"true"`
+	AuthenticationEnabled bool `default:"true"`
 }
 
 func (t *MiddlewaresProperties) Prefix() string {

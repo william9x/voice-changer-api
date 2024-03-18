@@ -29,3 +29,19 @@ func NewFile(file *multipart.FileHeader) (File, error) {
 		MetaData: make(map[string]string),
 	}, nil
 }
+
+//func NewFileFromStream(content io.ReadCloser, size int64) (File, error) {
+//	ext := path.Ext(file.Filename)
+//	content, err := file.Open()
+//	if err != nil {
+//		return File{}, nil
+//	}
+//	defer content.Close()
+//	return File{
+//		Name:     file.Filename,
+//		Ext:      ext,
+//		Size:     size,
+//		Content:  content,
+//		MetaData: make(map[string]string),
+//	}, nil
+//}

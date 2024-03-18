@@ -20,5 +20,5 @@ func RegisterFormValidators() error {
 
 func tasktype(fl validator.FieldLevel) bool {
 	val := fl.Field().String()
-	return val == "vc:rvc"
+	return val == "vc:rvc" || val == "aic"
 }
