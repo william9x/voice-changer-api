@@ -14,6 +14,7 @@ app:
   files:
     BaseInputPath: "/root/app/audio"
     BaseOutputPath: "/root/app/audio"
+    BaseAICOutputPath: "/root/app/audio/aic"
   rvc:
     Endpoint: http://localhost:8080
     InferPath: /api/v1/rvc/infer

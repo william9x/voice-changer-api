@@ -11,8 +11,9 @@ func NewFileProperties(loader config.Loader) (*FileProperties, error) {
 }
 
 type FileProperties struct {
-	BaseInputPath  string
-	BaseOutputPath string
+	BaseInputPath     string
+	BaseOutputPath    string
+	BaseAICOutputPath string
 }
 
 func (r *FileProperties) Prefix() string {

@@ -64,7 +64,7 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		return err
 	}
 
-	rvcResultPath := fmt.Sprintf("%s/rvc_%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
+	rvcResultPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 	log.Debugc(ctx, "task %s audio seperated to %s and %s, converting vocal to %s",
 		taskID, sepFiles.VocalPath, sepFiles.InstPath, rvcResultPath)
 
@@ -80,7 +80,7 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 
 	split0 := sepFiles.InstPath
 	split1 := rvcResultPath
-	ffmpegResult := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
+	ffmpegResult := fmt.Sprintf("%s/%s", r.fileProps.BaseAICOutputPath, vcPayload.TargetFileName)
 	filter := "[1:0]volume=1.5[b];[a][b]amix=inputs=2:duration=longest"
 
 	cmd := fmt.Sprintf("ffmpeg -y -i %s -i %s -filter_complex %s -c:a %s", split0, split1, filter, ffmpegResult)
