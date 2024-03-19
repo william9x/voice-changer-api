@@ -50,7 +50,7 @@ func (r *InferenceService) CreateInference(ctx context.Context, req requests.Cre
 		return resources.CreateInference{}, fmt.Errorf("get pre-signed src object error: %v", err)
 	}
 
-	targetFileName := fmt.Sprintf("target/%s%s", taskId, srcFile.Ext)
+	targetFileName := fmt.Sprintf("target/%s.mp3", taskId)
 	targetFileURL, err := r.objectStoragePort.GetPreSignedObject(ctx, targetFileName)
 	if err != nil {
 		return resources.CreateInference{}, fmt.Errorf("get pre-signed target object error: %v", err)
