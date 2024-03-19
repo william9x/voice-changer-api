@@ -93,7 +93,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/resources.CreateInference"
+                                            "$ref": "#/definitions/resources.Infer"
                                         }
                                     }
                                 }
@@ -220,7 +220,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "resources.CreateInference": {
+        "resources.Infer": {
             "type": "object",
             "properties": {
                 "deadline": {

@@ -22,6 +22,10 @@ app:
   svc:
     Endpoint: http://localhost:8082
     InferPath: /api/v1/infer
+
+  uvr:
+    Endpoint: http://localhost:8083
+    InferPath: /api/v1/uvr/infer
   asynq:
     Addr: localhost:6379
     Password: braly@123

@@ -21,7 +21,7 @@ func NewRVCAdapter(client *http.Client, props *properties.RVCProperties) *RVCAda
 	return &RVCAdapter{client: client, props: props}
 }
 
-func (r *RVCAdapter) CreateInference(ctx context.Context, cmd entities.InferenceCommand) error {
+func (r *RVCAdapter) Infer(ctx context.Context, cmd entities.InferenceCommand) error {
 	buf := new(bytes.Buffer)
 	if err := json.NewEncoder(buf).Encode(cmd); err != nil {
 		return fmt.Errorf("encoding request error: %v", err)
@@ -42,33 +42,4 @@ func (r *RVCAdapter) CreateInference(ctx context.Context, cmd entities.Inference
 	}
 
 	return nil
-}
-
-func (r *RVCAdapter) SeperateAudio(ctx context.Context, cmd entities.SeparateAudioCommand) (entities.SeparateAudioResponse, error) {
-	buf := new(bytes.Buffer)
-	if err := json.NewEncoder(buf).Encode(cmd); err != nil {
-		return entities.SeparateAudioResponse{}, err
-	}
-
-	httpReq, err := http.NewRequestWithContext(ctx, "POST", r.props.UVRPathURL, buf)
-	if err != nil {
-		return entities.SeparateAudioResponse{}, err
-	}
-
-	resp, err := r.client.Do(httpReq)
-	if err != nil {
-		return entities.SeparateAudioResponse{}, err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 201 && resp.StatusCode != 200 {
-		return entities.SeparateAudioResponse{}, err
-	}
-
-	var respData entities.SeparateAudioResponse
-	if err := json.NewDecoder(resp.Body).Decode(&respData); err != nil {
-		return entities.SeparateAudioResponse{}, err
-	}
-
-	return respData, nil
 }

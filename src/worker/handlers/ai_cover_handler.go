@@ -13,20 +13,23 @@ import (
 )
 
 type AICoverHandler struct {
-	objectStoragePort ports.ObjectStoragePort
-	inferencePort     ports.InferencePort
-	fileProps         *properties.FileProperties
+	objectStoragePort  ports.ObjectStoragePort
+	voiceChangerPort   ports.VoiceChangerPort
+	audioSeparatorPort ports.AudioSeparatorPort
+	fileProps          *properties.FileProperties
 }
 
 func NewAICoverHandler(
 	objectStoragePort ports.ObjectStoragePort,
-	inferencePort ports.InferencePort,
+	voiceChangerPort ports.VoiceChangerPort,
+	audioSeparatorPort ports.AudioSeparatorPort,
 	fileProps *properties.FileProperties,
 ) *AICoverHandler {
 	return &AICoverHandler{
-		objectStoragePort: objectStoragePort,
-		inferencePort:     inferencePort,
-		fileProps:         fileProps,
+		objectStoragePort:  objectStoragePort,
+		voiceChangerPort:   voiceChangerPort,
+		audioSeparatorPort: audioSeparatorPort,
+		fileProps:          fileProps,
 	}
 }
 
@@ -54,14 +57,14 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 
 	//localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 
-	_, err := r.inferencePort.SeperateAudio(ctx, entities.SeparateAudioCommand{
+	_, err := r.audioSeparatorPort.Infer(ctx, entities.SeparateAudioCommand{
 		InputPath: localSourcePath,
 	})
 	if err != nil {
 		return err
 	}
 
-	//if err := r.inferencePort.CreateInference(ctx, entities.InferenceCommand{
+	//if err := r.voiceChangerPort.Infer(ctx, entities.InferenceCommand{
 	//	ModelPath: fmt.Sprintf("%s.pth", vcPayload.Model),
 	//	IndexPath: fmt.Sprintf("%s.index", vcPayload.Model),
 	//	InputPath: audios.VocalPath,

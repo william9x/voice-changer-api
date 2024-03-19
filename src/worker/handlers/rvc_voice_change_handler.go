@@ -14,18 +14,18 @@ import (
 
 type RVCVoiceChangeHandler struct {
 	objectStoragePort ports.ObjectStoragePort
-	inferencePort     ports.InferencePort
+	voiceChangerPort  ports.VoiceChangerPort
 	fileProps         *properties.FileProperties
 }
 
 func NewRVCVoiceChangeHandler(
 	objectStoragePort ports.ObjectStoragePort,
-	inferencePort ports.InferencePort,
+	voiceChangerPort ports.VoiceChangerPort,
 	fileProps *properties.FileProperties,
 ) *RVCVoiceChangeHandler {
 	return &RVCVoiceChangeHandler{
 		objectStoragePort: objectStoragePort,
-		inferencePort:     inferencePort,
+		voiceChangerPort:  voiceChangerPort,
 		fileProps:         fileProps,
 	}
 }
@@ -54,7 +54,7 @@ func (r *RVCVoiceChangeHandler) Handle(ctx context.Context, task *asynq.Task) er
 
 	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 
-	if err := r.inferencePort.CreateInference(ctx, entities.InferenceCommand{
+	if err := r.voiceChangerPort.Infer(ctx, entities.InferenceCommand{
 		ModelPath: fmt.Sprintf("%s.pth", vcPayload.Model),
 		IndexPath: fmt.Sprintf("%s.index", vcPayload.Model),
 		InputPath: localSourcePath,

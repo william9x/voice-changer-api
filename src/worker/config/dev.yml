@@ -18,6 +18,9 @@ app:
     Endpoint: http://localhost:8080
     InferPath: /api/v1/rvc/infer
     UVRPath: /api/v1/uvr/infer
+  uvr:
+    Endpoint: http://localhost:8082
+    InferPath: /api/v1/uvr/infer
   asynq:
     Addr: 194.233.85.239:6379
     Password: braly@123

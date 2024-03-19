@@ -28,6 +28,7 @@ func All() fx.Option {
 		golib.ProvideProps(adapterProps.NewMinIOProperties),
 		golib.ProvideProps(adapterProps.NewAsynqProperties),
 		golib.ProvideProps(adapterProps.NewRVCProperties),
+		golib.ProvideProps(adapterProps.NewUVRProperties),
 		golib.ProvideProps(properties.NewFileProperties),
 		golib.ProvideProps(properties.NewWorkerProperties),
 
@@ -44,7 +45,10 @@ func All() fx.Option {
 			adapter.NewAsynqAdapter, fx.As(new(ports.TaskQueuePort))),
 		),
 		fx.Provide(fx.Annotate(
-			adapter.NewRVCAdapter, fx.As(new(ports.InferencePort))),
+			adapter.NewRVCAdapter, fx.As(new(ports.VoiceChangerPort))),
+		),
+		fx.Provide(fx.Annotate(
+			adapter.NewUVRAdapter, fx.As(new(ports.AudioSeparatorPort))),
 		),
 
 		// Provide task handlers
