@@ -83,7 +83,7 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 	ffmpegResult := fmt.Sprintf("%s/%s", r.fileProps.BaseAICOutputPath, vcPayload.TargetFileName)
 	filter := "[1:0]volume=1.5[b];[a][b]amix=inputs=2:duration=longest"
 
-	cmd := fmt.Sprintf("ffmpeg -y -i %s -i %s -filter_complex %s -c:a %s", split0, split1, filter, ffmpegResult)
+	cmd := fmt.Sprintf("ffmpeg -y -i '%s' -i '%s' -filter_complex '%s' -c:a '%s'", split0, split1, filter, ffmpegResult)
 	if err := exec.Command(cmd).Run(); err != nil {
 		log.Errorf("run ffmpeg error: %v", err)
 		return err
