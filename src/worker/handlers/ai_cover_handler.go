@@ -64,7 +64,7 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		return err
 	}
 
-	rvcResultPath := fmt.Sprintf("%s_rvc_/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
+	rvcResultPath := fmt.Sprintf("%s/rvc_%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 	log.Debugc(ctx, "task %s audio seperated to %s and %s, converting vocal to %s",
 		taskID, sepFiles.VocalPath, sepFiles.InstPath, rvcResultPath)
 
