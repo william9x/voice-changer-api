@@ -47,7 +47,8 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		return fmt.Errorf("unpack task failed: %v", err)
 	}
 
-	log.Infoc(ctx, "task %s is processing", task.Type())
+	taskID := task.ResultWriter().TaskID()
+	log.Infoc(ctx, "task %s is processing", taskID)
 	log.Debugc(ctx, "task payload: %+v", vcPayload)
 
 	localSourcePath := fmt.Sprintf("%s/%s", r.fileProps.BaseInputPath, vcPayload.SrcFileName)
@@ -55,31 +56,33 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		return err
 	}
 
-	//localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
-
-	_, err := r.audioSeparatorPort.Infer(ctx, entities.SeparateAudioCommand{
+	sepFiles, err := r.audioSeparatorPort.Infer(ctx, entities.SeparateAudioCommand{
 		InputPath: localSourcePath,
 	})
 	if err != nil {
 		return err
 	}
 
-	//if err := r.voiceChangerPort.Infer(ctx, entities.InferenceCommand{
-	//	ModelPath: fmt.Sprintf("%s.pth", vcPayload.Model),
-	//	IndexPath: fmt.Sprintf("%s.index", vcPayload.Model),
-	//	InputPath: audios.VocalPath,
-	//	OutPath:   localTargetPath,
-	//	Transpose: vcPayload.Transpose,
-	//}); err != nil {
-	//	return err
-	//}
-	//
-	//log.Infoc(ctx, "task %s inference completed, start uploading file at %s", task.Type(), vcPayload.TargetFileName)
-	//if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, vcPayload.TargetFileName); err != nil {
-	//	log.Errorf("upload file error: %v", err)
-	//	return err
-	//}
+	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
+	log.Debugc(ctx, "task %s audio seperated to %s and %s, converting vocal to %s",
+		taskID, sepFiles.VocalPath, sepFiles.InstPath, localTargetPath)
 
-	log.Infoc(ctx, "task %s is done", task.Type())
+	if err := r.voiceChangerPort.Infer(ctx, entities.InferenceCommand{
+		ModelPath: fmt.Sprintf("%s.pth", vcPayload.Model),
+		IndexPath: fmt.Sprintf("%s.index", vcPayload.Model),
+		InputPath: sepFiles.VocalPath,
+		OutPath:   localTargetPath,
+		Transpose: vcPayload.Transpose,
+	}); err != nil {
+		return err
+	}
+
+	log.Infoc(ctx, "task %s inference completed, start uploading file at %s", taskID, vcPayload.TargetFileName)
+	if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, vcPayload.TargetFileName); err != nil {
+		log.Errorf("upload file error: %v", err)
+		return err
+	}
+
+	log.Infoc(ctx, "task %s is done", taskID)
 	return nil
 }
