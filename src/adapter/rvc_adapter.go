@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/Braly-Ltd/voice-changer-api-adapter/properties"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
+	"github.com/golibs-starter/golib/log"
 	"net/http"
 )
 
@@ -26,6 +27,7 @@ func (r *RVCAdapter) Infer(ctx context.Context, cmd entities.InferenceCommand) e
 	if err := json.NewEncoder(buf).Encode(cmd); err != nil {
 		return fmt.Errorf("encoding request error: %v", err)
 	}
+	log.Debugc(ctx, "inference request: %s", buf.String())
 
 	httpReq, err := http.NewRequestWithContext(ctx, "POST", r.props.InferURL, buf)
 	if err != nil {
