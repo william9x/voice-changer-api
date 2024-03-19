@@ -10,6 +10,7 @@ import (
 	"github.com/golibs-starter/golib/log"
 	"github.com/hibiken/asynq"
 	"github.com/vmihailenco/msgpack/v5"
+	"os/exec"
 )
 
 type AICoverHandler struct {
@@ -63,22 +64,33 @@ func (r *AICoverHandler) Handle(ctx context.Context, task *asynq.Task) error {
 		return err
 	}
 
-	localTargetPath := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
+	rvcResultPath := fmt.Sprintf("%s_rvc_/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
 	log.Debugc(ctx, "task %s audio seperated to %s and %s, converting vocal to %s",
-		taskID, sepFiles.VocalPath, sepFiles.InstPath, localTargetPath)
+		taskID, sepFiles.VocalPath, sepFiles.InstPath, rvcResultPath)
 
 	if err := r.voiceChangerPort.Infer(ctx, entities.InferenceCommand{
 		ModelPath: fmt.Sprintf("%s.pth", vcPayload.Model),
 		IndexPath: fmt.Sprintf("%s.index", vcPayload.Model),
 		InputPath: sepFiles.VocalPath,
-		OutPath:   localTargetPath,
+		OutPath:   rvcResultPath,
 		Transpose: vcPayload.Transpose,
 	}); err != nil {
 		return err
 	}
 
+	split0 := sepFiles.InstPath
+	split1 := rvcResultPath
+	ffmpegResult := fmt.Sprintf("%s/%s", r.fileProps.BaseOutputPath, vcPayload.TargetFileName)
+	filter := "[1:0]volume=1.5[b];[a][b]amix=inputs=2:duration=longest"
+
+	cmd := fmt.Sprintf("ffmpeg -y -i %s -i %s -filter_complex %s -c:a %s", split0, split1, filter, ffmpegResult)
+	if err := exec.Command(cmd).Run(); err != nil {
+		log.Errorf("run ffmpeg error: %v", err)
+		return err
+	}
+
 	log.Infoc(ctx, "task %s inference completed, start uploading file at %s", taskID, vcPayload.TargetFileName)
-	if err := r.objectStoragePort.UploadFilePath(ctx, localTargetPath, vcPayload.TargetFileName); err != nil {
+	if err := r.objectStoragePort.UploadFilePath(ctx, ffmpegResult, vcPayload.TargetFileName); err != nil {
 		log.Errorf("upload file error: %v", err)
 		return err
 	}
