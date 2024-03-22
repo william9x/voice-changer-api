@@ -3,7 +3,6 @@ package services
 import (
 	"context"
 	"fmt"
-	"github.com/Braly-Ltd/voice-changer-api-core/constants"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"github.com/Braly-Ltd/voice-changer-api-core/ports"
 	"github.com/Braly-Ltd/voice-changer-api-core/utils"
@@ -61,8 +60,7 @@ func (r *InferenceService) CreateInference(ctx context.Context, req requests.Cre
 		return resources.CreateInference{}, fmt.Errorf("pack payload error: %v", err)
 	}
 
-	// TODO: Select queue based on model type
-	queue := string(constants.QueueTypeDefault)
+	queue := string(req.Queue)
 	maxRetry := 0
 	deadline := time.Now().Add(10 * time.Minute)
 	retention := 24 * time.Hour

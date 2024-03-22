@@ -1,6 +1,7 @@
 package requests
 
 import (
+	"github.com/Braly-Ltd/voice-changer-api-core/constants"
 	"github.com/Braly-Ltd/voice-changer-api-core/entities"
 	"mime/multipart"
 )
@@ -15,5 +16,8 @@ type CreateInferenceRequest struct {
 	SrcURL      string                `form:"source_url,omitempty"`
 	SrcProvider string                `form:"source_provider,omitempty"`
 
+	QueueID uint8 `form:"queue_id,omitempty"`
+
+	Queue   constants.QueueType `form:"queue,omitempty"`
 	SrcFile entities.File
 }

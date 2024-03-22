@@ -144,6 +144,15 @@ func (c *InferenceController) CreateInfer(ctx *gin.Context) {
 		req.SrcFile = file
 	}
 
+	if req.QueueID == 0 {
+		req.Queue = constants.QueueTypeDefault
+	} else if req.QueueID == 1 {
+		req.Queue = constants.QueueTypePremiumL1
+	} else {
+		response.WriteError(ctx.Writer, exception.New(40000, "QueueID invalid"))
+		return
+	}
+
 	resp, err := c.inferenceService.CreateInference(ctx, req)
 	if err != nil {
 		log.Errorc(ctx, "%v", err)
