@@ -25,8 +25,9 @@ func NewAsynqWorker(
 			DB:       queueProps.DB,
 		},
 		asynq.Config{
-			Concurrency: workerProps.Concurrency,
-			Queues:      queueProps.Queues,
+			Concurrency:    workerProps.Concurrency,
+			Queues:         queueProps.Queues,
+			StrictPriority: workerProps.StrictPriority,
 		},
 	)
 

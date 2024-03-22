@@ -11,7 +11,8 @@ func NewWorkerProperties(loader config.Loader) (*WorkerProperties, error) {
 }
 
 type WorkerProperties struct {
-	Concurrency int
+	Concurrency    int
+	StrictPriority bool `default:"true"`
 }
 
 func (r *WorkerProperties) Prefix() string {

@@ -28,5 +28,7 @@ app:
     DB: 1
     Queues:
       vc_default: 10
+      vc_prem_1: 20
     Worker:
-      Concurrency: 10
+      Concurrency: 5
+      StrictPriority: true
