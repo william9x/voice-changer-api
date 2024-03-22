@@ -70,6 +70,15 @@
                         "description": "Transpose",
                         "name": "transpose",
                         "in": "formData"
+                    },
+                    {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Queue ID",
+                        "name": "queue_id",
+                        "in": "formData"
                     }
                 ],
                 "responses": {
@@ -84,7 +93,7 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/resources.CreateInference"
+                                            "$ref": "#/definitions/resources.Inference"
                                         }
                                     }
                                 }
@@ -211,35 +220,6 @@
         }
     },
     "definitions": {
-        "resources.CreateInference": {
-            "type": "object",
-            "properties": {
-                "deadline": {
-                    "description": "Deadline for completing the task",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "max_retry": {
-                    "type": "integer"
-                },
-                "model": {
-                    "type": "string"
-                },
-                "status": {
-                    "description": "Status of the task. Values: active, pending, scheduled, retry, archived, completed",
-                    "type": "string"
-                },
-                "task_id": {
-                    "description": "@Deprecated",
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                }
-            }
-        },
         "resources.Inference": {
             "type": "object",
             "properties": {

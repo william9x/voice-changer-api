@@ -79,6 +79,15 @@ const docTemplate = `{
                         "description": "Transpose",
                         "name": "transpose",
                         "in": "formData"
+                    },
+                    {
+                        "maximum": 1,
+                        "minimum": 0,
+                        "type": "integer",
+                        "default": 0,
+                        "description": "Queue ID",
+                        "name": "queue_id",
+                        "in": "formData"
                     }
                 ],
                 "responses": {
@@ -93,7 +102,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/resources.Infer"
+                                            "$ref": "#/definitions/resources.Inference"
                                         }
                                     }
                                 }
@@ -220,35 +229,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "resources.Infer": {
-            "type": "object",
-            "properties": {
-                "deadline": {
-                    "description": "Deadline for completing the task",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "max_retry": {
-                    "type": "integer"
-                },
-                "model": {
-                    "type": "string"
-                },
-                "status": {
-                    "description": "Status of the task. Values: active, pending, scheduled, retry, archived, completed",
-                    "type": "string"
-                },
-                "task_id": {
-                    "description": "@Deprecated",
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                }
-            }
-        },
         "resources.Inference": {
             "type": "object",
             "properties": {

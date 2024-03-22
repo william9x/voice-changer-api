@@ -93,7 +93,8 @@ func (c *InferenceController) GetInfer(ctx *gin.Context) {
 //	@Param			model				formData		string			true	"Target voice" default(trump)
 //	@Param			type				formData		string			true	"Task's type" default(vc:rvc) Enums(vc:rvc, aic)
 //	@Param			transpose			formData		int				false	"Transpose" default(0) minimum(-12) maximum(12)
-//	@Success		201		{object}	response.Response{data=resources.Infer}
+//	@Param			queue_id			formData		int				false	"Queue ID" default(0) minimum(0) maximum(1)
+//	@Success		201		{object}	response.Response{data=resources.Inference}
 //	@Failure		400		{object}	response.Response
 //	@Failure		500		{object}	response.Response
 //	@Router			/api/v1/infer [post]
