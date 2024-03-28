@@ -24,4 +24,4 @@ app:
     Queues:
       vc_default: 10
     Worker:
-      Concurrency: 15
+      Concurrency: 2

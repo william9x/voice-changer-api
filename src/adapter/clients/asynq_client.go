@@ -15,10 +15,11 @@ func NewAsynqInspector(props *properties.AsynqProperties) *asynq.Inspector {
 
 func newRedisClientOpt(props *properties.AsynqProperties) asynq.RedisClientOpt {
 	return asynq.RedisClientOpt{
-		Addr:     props.Addr,
-		Username: props.Username,
-		Password: props.Password,
-		DB:       props.DB,
-		PoolSize: props.PoolSize,
+		Addr:        props.Addr,
+		Username:    props.Username,
+		Password:    props.Password,
+		DB:          props.DB,
+		PoolSize:    props.PoolSize,
+		ReadTimeout: -1,
 	}
 }

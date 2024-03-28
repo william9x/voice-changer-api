@@ -8,7 +8,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golibs-starter/golib v1.0.1
 	github.com/golibs-starter/golib-gin v1.0.0
-	github.com/hibiken/asynq v0.24.1
+	github.com/hibiken/asynq v0.24.2-0.20240315053219-8df0bfa5834b
 	github.com/vmihailenco/msgpack/v5 v5.4.1
 	go.uber.org/fx v1.20.0
 )
@@ -28,7 +28,7 @@ require (
 	github.com/go-playground/validator/v10 v10.14.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/google/uuid v1.5.0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.17.4 // indirect
