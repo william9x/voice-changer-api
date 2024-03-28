@@ -3,6 +3,7 @@ package clients
 import (
 	"github.com/Braly-Ltd/voice-changer-api-adapter/properties"
 	"github.com/hibiken/asynq"
+	"time"
 )
 
 func NewAsynqClient(props *properties.AsynqProperties) *asynq.Client {
@@ -15,11 +16,13 @@ func NewAsynqInspector(props *properties.AsynqProperties) *asynq.Inspector {
 
 func newRedisClientOpt(props *properties.AsynqProperties) asynq.RedisClientOpt {
 	return asynq.RedisClientOpt{
-		Addr:        props.Addr,
-		Username:    props.Username,
-		Password:    props.Password,
-		DB:          props.DB,
-		PoolSize:    props.PoolSize,
-		ReadTimeout: -1,
+		Addr:         props.Addr,
+		Username:     props.Username,
+		Password:     props.Password,
+		DB:           props.DB,
+		PoolSize:     props.PoolSize,
+		DialTimeout:  time.Minute,
+		ReadTimeout:  -1,
+		WriteTimeout: time.Minute,
 	}
 }
